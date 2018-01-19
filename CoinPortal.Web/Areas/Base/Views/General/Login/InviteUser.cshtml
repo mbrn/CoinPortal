@@ -1,0 +1,247 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!--
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 4.5.4
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>Kullanıcı Onayı</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href='@(Request.IsSecureConnection ? "https" : "http")://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all' rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="~/Theme/Metronic/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="~/Theme/Metronic/assets/global/css/components-rounded.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="~/Theme/Metronic/assets/pages/css/login.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<!-- END HEAD -->
+<body class=" login">
+    <!-- BEGIN LOGO -->
+    <div class="logo">
+        @SgHelpers.LogoSetPassword()
+    </div>
+    <!-- END LOGO -->
+    <!-- BEGIN LOGIN -->
+    <div class="content">
+        @if (ViewBag.Status == "NoVerification")
+        {
+            <form class="login-form">
+                <h3 class="form-title font-green">Doğrulama Hatası</h3>
+                <div class="alert alert-danger display">
+                    <a class="close" data-close="alert"></a>
+                    <span>
+                        Doğrulama kodu geçersiz
+                    </span>
+                </div>
+
+                <div class="form-actions">
+                    <a href="..\..\" class="btn btn-success pull-right" ><i class="fa fa-home"></i> Ana Sayfa</a>
+                </div>
+            </form>
+        }
+        else if (ViewBag.Status == "IsAlreadyConfirmed")
+        {
+            <form class="login-form">
+                <h3 class="form-title font-green">Doğrulama Hatası</h3>
+                <div class="alert alert-danger display">
+                    <a class="close" data-close="alert"></a>
+                    <span>
+                        Zaten doğrulama yapılmış
+                    </span>
+                </div>
+
+                <div class="form-actions">
+                    <a href="..\..\" class="btn btn-success pull-right" ><i class="fa fa-home"></i> Ana Sayfa</a>
+                </div>
+            </form>
+        }
+        else if (ViewBag.Status == "IsCancelled")
+        {
+            <form class="login-form">
+                <h3 class="form-title font-green">Doğrulama Hatası</h3>
+                <div class="alert alert-danger display">
+                    <a class="close" data-close="alert"></a>
+                    <span>
+                        Davetiyeniz iptal edilmiş
+                    </span>
+                </div>
+
+                <div class="form-actions">
+                    <a href="..\..\" class="btn btn-success pull-right"><i class="fa fa-home"></i> Ana Sayfa</a>
+                </div>
+            </form>
+        }
+        else if (ViewBag.Status == "NewUser")
+        {
+            <form class="login-form"  action="../../Base/Login/InviteUser" id="frmInviteUserNew" method="post">
+                <h3 class="form-title font-green">Yeni Üyelik</h3>
+                <div class="alert alert-danger display-hide no-info">
+                    <a class="close" data-close="alert"></a>
+                    <span>
+                        Lütfen kullanıcı bilgilerinizi giriniz
+                    </span>
+                </div>
+                <input type="hidden" value="@ViewBag.VerificationCode" name="verificationCode" />
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Ad</label>
+                    <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Ad" id="name" name="name"
+                           style="-webkit-box-shadow: 0 0 0px 1000px #dde3ec inset;" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Soyad</label>
+                    <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Soyad" id="surname" name="surname"
+                           style="-webkit-box-shadow: 0 0 0px 1000px #dde3ec inset;" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Şifre</label>
+                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Şifre" id="password" name="password"
+                           style="-webkit-box-shadow: 0 0 0px 1000px #dde3ec inset;" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Şifre Tekrar</label>
+                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Şifre Tekrar" id="passwordAgain" name="passwordAgain"
+                           style="-webkit-box-shadow: 0 0 0px 1000px #dde3ec inset;" />
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-success" type="submit" id="btnInviteUser">Kaydet</button>
+                </div>
+            </form>
+        }
+        else if (ViewBag.Status == "Confirmed")
+        {
+            <form class="login-form">
+                <h3 class="form-title font-green">Üyelik Onayı</h3>
+                <div class="alert alert-success display">
+                    <a class="close" data-close="alert"></a>
+                    <span>
+                        Tebrikler! @ViewBag.TenantName ağına üyeliğiniz aktifleştirildi
+                    </span>
+                </div>
+                <div class="form-actions">
+                    <a href="..\..\" class="btn btn-success pull-right"><i class="fa fa-home"></i> Ana Sayfa</a>
+                </div>
+            </form>
+        }
+    </div>
+    <div class="copyright"> 2015 © <a href="http://www.deviatech.com.tr" target="_blank">DeviaTech</a> </div>
+    <!--[if lt IE 9]>
+    <script src="../assets/global/plugins/respond.min.js"></script>
+    <script src="../assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="~/Theme/Metronic/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/Theme/Metronic/assets/pages/scripts/login.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <!-- END THEME LAYOUT SCRIPTS -->    
+
+    <script>
+        jQuery(document).ready(function () {
+            var btnInviteUser = $('#btnInviteUser');
+            var frmInviteUserNew = $('#frmInviteUserNew');
+
+            btnInviteUser.click(function () {
+                frmInviteUserNew.find('.alert-danger').hide();
+
+                var name = frmInviteUserNew.find('#name').val();
+                if (name == undefined || name == "" || name == null) {
+                    frmInviteUserNew.find('.alert-danger span').text('Lütfen adınızı giriniz.');
+                    frmInviteUserNew.find('.alert-danger').show();
+                    return false;
+                }
+
+                var surname = frmInviteUserNew.find('#surname').val();
+                if (surname == undefined || surname == "" || surname == null) {
+                    frmInviteUserNew.find('.alert-danger span').text('Lütfen soyadınızı giriniz.');
+                    frmInviteUserNew.find('.alert-danger').show();
+                    return false;
+                }
+
+                var password = frmInviteUserNew.find('#password').val();
+                if (password == undefined || password == "" || password == null) {
+                    frmInviteUserNew.find('.alert-danger span').text('Lütfen şifreyi giriniz.');
+                    frmInviteUserNew.find('.alert-danger').show();
+                    return false;
+                }
+
+                if (password.length < 6) {
+                    frmInviteUserNew.find('.alert-danger span').text('Şifreniz en az 6 karakterden oluşmalıdır.');
+                    frmInviteUserNew.find('.alert-danger').show();
+                    return false;
+                }
+
+                var passwordAgain = frmInviteUserNew.find('#passwordAgain').val();
+                if (password != passwordAgain) {
+                    frmInviteUserNew.find('.alert-danger span').text('Girdiğiniz şifreler uyuşmuyor. Lütfen kontrol ederek tekrar deneyiniz.');
+                    frmInviteUserNew.find('.alert-danger').show();
+                    return false;
+                }
+                
+                return true;
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

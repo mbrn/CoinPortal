@@ -1,0 +1,70 @@
+@using Devia.Sigma.Business.Parameter.Entity
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmPrmCityTownAdd" class="btn green">@Html.Sigma().Icon("f067") Ekle</a>
+                </div>
+                <div class="actions"></div>
+            </div>
+            <div class="portlet-body">
+                <table id="tblFrmPrmCityTown" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmPrmCityTown_info"></table>
+                <div class="clearfix"></div>
+
+                <div id="modalFormFrmPrmCityTown" class="modal fade bs-modal-lg"  aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Ýlçe Ekle</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                                        <div class="row">
+                                            <form role="form" id="frmFrmPrmCityTown">
+                                                <div class="form-body">
+                                                    @SgHtml.TextBox("Guid", "Guid", "col-md-6 display-hide", "Guid", 50, "text", "")
+                                                    @SgHtml.CheckBox("Status", "Status", "col-md-6 display-hide")
+                                                    @SgHtml.TextBox("Lastupdated", "Lastupdated", "col-md-6 display-hide", "Lastupdated", 16, "numeric", "")
+                                                    @SgHtml.TextBox("TownId", "TownId", "col-md-6 display-hide", "TownId", 10, "numeric", "disabled")
+                                                    @SgHtml.TextBox("TownName", "Ýlçe Adý", "col-md-6 ", "Ýlçe Adý", 50, "text", "")
+                                                    @SgHtml.ComboBox("CityId", "Þehir Adý", FrmPrmCity.SelectAll().ToDictionary(x => x.CityId.ToString(), x => x.CityName), "col-md-6")
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnFrmPrmCityTownCancel" type="button" data-dismiss="modal" class="btn btn-default">Ýptal</button>
+                                <button id="btnFrmPrmCityTownSave" type="button" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</button>
+                                <button id="btnFrmPrmCityTownUpdate" type="button" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+@section pageScript
+{
+    <script>
+        var prmCityLookup = JSON.parse('@Html.Raw(FrmPrmCity.SelectAll().ToDictionary(x => x.CityId, x => x.CityName).SgSerializeToJson())');
+    </script>
+
+    <script src="~/Areas/Base/Scripts/Parameter/FrmPrmCityTown.js"></script>
+}

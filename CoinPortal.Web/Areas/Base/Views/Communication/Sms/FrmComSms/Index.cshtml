@@ -1,0 +1,109 @@
+﻿@using Devia.Sigma.Business.Communication.Mail.Entity
+@using Devia.Sigma.Business.Communication.Sms.Entity
+@using Devia.Sigma.Business.Sys.Provider.Entity
+@using Devia.Sigma.Business.Sys.Provider
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN SAMPLE FORM PORTLET-->
+		<div class="portlet light bordered">
+			<div class="portlet-title">
+				<div class="caption">
+					<a id="btnFrmComSmsRetrieve" class="btn green">@Html.Sigma().Icon("f002") Getir</a>
+					<a id="btnFrmComSmsCancel" class="btn red-sunglo">@Html.Sigma().Icon("f00d") İptal et</a>
+					<a id="btnFrmComSmsClear" class="btn btn-default">@Html.Sigma().Icon("f1f8") Temizle</a>
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<form role="form" id="frmFrmComSms">
+					<div class="form-body">
+						<div class="form-group col-md-3 ">
+							<label class="control-label">Tarih Aralığı</label>
+							<div class="input-icon">
+								<i class="fa fa-calendar"></i>
+								<input type="text" id="dateRange" name="dateRange" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group col-md-3 ">
+							<label class="control-label">Sms Hesabı</label>
+							<select id="AccountId" name="AccountId" class="form-control select2" data-placeholder="Sms Hesabı" tabindex="-1" aria-hidden="true">
+								@{
+									<option value="-1">Tüm Hesaplar</option>
+									foreach (var item in FrmPrvAcc.SelectAll(a => a.PrvType == SgProviderManager.ProviderType.Sms))
+									{
+										<option value="@item.AccId">@item.AccName</option>
+									}
+								}
+							</select>
+						</div>
+						<div class="form-group col-md-3 ">
+							<label class="control-label">Durumu</label>
+							@(Html.Sigma().ComboBox<FrmComPrmEmlStt>("SmsStatus", "EmailStatus", "Description", "form-control"))
+						</div>
+						@SgHtml.TextBox("PhoneNo", "Telefon No", "col-md-3", "Telefon No", 32, "text", "")
+					</div>
+				</form>
+
+				<div class="clearfix"></div>
+				<!-- Grid -->
+				<table id="tblFrmComSms" class="table table-striped table-hover table-bordered dataTable no-footer table-checkable" cellspacing="0" role="grid" aria-describedby="tblFrmComSms_info"></table>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<!-- END SAMPLE FORM PORTLET-->
+	</div>
+</div>
+
+<div id="modalBody" class="modal fade bs-modal-lg" tabindex="-1" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal" aria-hidden="true"></a>
+				<div class="caption">
+					<i class="fa fa-user font-blue-hoki"></i>
+					<span class="caption-subject bold font-blue-hoki uppercase"> SMS GÖVDESİ </span>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+					<div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+						<div class="row">
+							<div id="SmsBody" class="col-md-12">
+								<div class="clearfix"></div>
+								<!-- Grid -->
+								<table id="tblFrmComSmsBody" class="table table-striped table-hover table-bordered dataTable no-footer table-checkable" cellspacing="0" role="grid" aria-describedby="tblFrmComSms_info"></table>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a id="btnFrmComSmsNumberCancel" data-dismiss="modal" class="btn red-sunglo" style="display:none">@Html.Sigma().Icon("f00d") İptal et</a>
+				<a id="btnFrmAutUsrCancel" data-dismiss="modal" class="btn blue-madison">Tamam</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section pageScript
+{
+	<script>
+         var comSmsLookup = JSON.parse('@Html.Raw(FrmComPrmEmlStt.SelectAll().ToDictionary(a => a.EmailStatus, a => a.Description).SgSerializeToJson())');
+         var comSmsaccLookup = JSON.parse('@Html.Raw(FrmPrvAcc.SelectAll(a => a.PrvType == SgProviderManager.ProviderType.Sms).ToDictionary(a => a.AccId, a => a.AccName).SgSerializeToJson())');
+         var comSmRspSttLookup = JSON.parse('@Html.Raw(FrmComSmsRspStt.SelectAll().ToDictionary(a => a.ValueKey, a => a.Value).SgSerializeToJson())');
+	</script>
+	<script src="~/Areas/Base/Scripts/Communication/Sms/FrmComSms.js"></script>
+}
+
+
+
+

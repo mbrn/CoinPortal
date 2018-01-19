@@ -1,0 +1,185 @@
+﻿@using Devia.Sigma.Business.Help.Announce.Entity
+@using Devia.Sigma.Business.Auth.Session
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+    <!-- BEGIN SAMPLE FORM PORTLET-->
+
+    @{
+        var divider = 2;
+        var count = FrmAnnDef.Count(u => u.StartDate <= DateTime.Now && u.FinishDate >= DateTime.Now && u.IsActive == true && (u.TntType == "-1" || u.TntType == SgSession.Current.Tenant.TntType));
+        if (count == 0)
+        {
+                <p class="text-muted text-center" style="font-size: 18px;"> Duyuru bulunamadı</p>
+        }
+        if (count <= divider)
+        {
+            foreach (var ann in FrmAnnDef.SelectAll(u => u.StartDate <= DateTime.Now && u.FinishDate >= DateTime.Now && u.IsActive == true && (u.TntType == "-1" || u.TntType == SgSession.Current.Tenant.TntType)).OrderBy(a => a.Priority).ThenBy(u => u.CtgId))
+            {
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-paper-plane font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase"> @FrmAnnCtg.SelectFirst(u => u.CatId == ann.CtgId).CatName </span>
+                            <span class="caption-helper">@ann.StartDate</span>
+
+                        </div>
+                        <div class="tools">
+                            <a class="fa fa-expand"></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <h4>@ann.Subject</h4>
+                        <div style="max-height:200px; overflow:hidden">
+                            @Html.Raw(ann.AnnounceSummary);
+                        </div>
+                        <div class="show-more" style="display:none">
+                            @Html.Raw(ann.Announce);
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            var pageCount = (count / divider) + ((count % divider) == 0 ? 0 : 1);
+            foreach (var ann in FrmAnnDef.SelectTop(divider, 0,u => u.StartDate <= DateTime.Now && u.FinishDate >= DateTime.Now && u.IsActive == true && (u.TntType == "-1" || u.TntType == SgSession.Current.Tenant.TntType)).OrderBy(a => a.Priority).ThenBy(u => u.CtgId))
+            {
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-paper-plane font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase"> @FrmAnnCtg.SelectFirst(u => u.CatId == ann.CtgId).CatName </span>
+                            <span class="caption-helper">@ann.StartDate</span>
+
+                        </div>
+                        <div class="tools">
+                            <a class="fa fa-expand"></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <h4>@ann.Subject</h4>
+                        <div  class="show-summary" style="max-height:200px; overflow:hidden">
+                            @Html.Raw(ann.AnnounceSummary);
+                        </div>
+                        <div class="show-more" style="display:none">
+                            @Html.Raw(ann.Announce);
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+            <div id="pagingDiv"  >
+                <ul class="pagination bootpag pull-right" divider="@divider">
+                    <li data-lp="0"   class="pageItem prev disabled"><a><i class="fa fa-angle-left"></i></a></li>
+                    <li data-lp="0"  class="pageItem disabled"><a value="1">1</a></li>
+                    @if (pageCount == 1)
+                    {
+                        <li data-lp="0" class="pageItem next disabled"><a><i class="fa fa-angle-right"></i></a></li>
+                    }
+                    else
+                    {
+                        for (int i = 1; i < pageCount; i++)
+                        {
+                            <li data-lp="@i" class="pageItem" ><a value="@(i+1)">@(i + 1)</a></li>
+                        }
+                        <li  data-lp="@(pageCount-1)" class="pageItem next"><a><i class="fa fa-angle-right"></i></a></li>
+                    }
+                </ul>
+            </div>
+        }
+
+    }
+      <!-- END SAMPLE FORM PORTLET-->
+     
+  </div>
+</div>
+
+
+<div class="modal fade bs-modal-lg in" id="modalAnnouncetPopup" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Duyuru İçeriği</h4>
+            </div>
+            <div class="modal-body" id="txtAnnouncePopup">  </div>
+            <div class="modal-footer">
+                <button type="button" class="btn blue-madison" data-dismiss="modal">Tamam</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section pageScript
+{
+      <script type="text/javascript" src="~/Theme/Metronic/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        var catLookup = JSON.parse('@Html.Raw(FrmAnnCtg.SelectAll().ToDictionary(a => a.CatId, a => a.CatName).SgSerializeToJson())');
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+            moment.locale('tr');
+            $('.caption-helper').each(function (index, element) {
+                $(element).text(moment($(element).text(), "DD.MM.YYYY hh:mm:ss").fromNow());
+            });
+            $('.fa-expand').click(function (index, element) {
+                $("#txtAnnouncePopup").html($(this).parents(".portlet").find(".portlet-body > .show-more").html());
+                $("#modalAnnouncetPopup").modal("show");
+            });
+
+            $('.pageItem').click(function () {
+                var divider =  $(".pagination").attr("divider");
+                var index = 0;
+                if ($(this).is(".disabled,.active"))
+                    return;
+                if ($(this).hasClass("prev"))
+                    index = parseInt($(".pagination .disabled:not('prev'):not('next')").attr("data-lp")) - 1;
+                else if ($(this).hasClass("next"))
+                    index = parseInt($(".pagination .disabled:not('prev'):not('next')").attr("data-lp")) + 1;
+                else 
+                    index = $(this).attr("data-lp");
+
+                $(".pageItem").removeClass("disabled");
+                $(".pagination li[data-lp='" + index + "']").addClass("disabled");
+
+                Sigma.ajax({
+                    url: "../../Base/Announce/GetAnnounce",
+                    data: { top:divider, offSet: divider * index },
+                    onSuccess: function (data) {
+                        $(".portlet").hide();
+                        var annList = JSON.parse(data);
+                        var i = 0;
+                        $('.portlet').each(function (index, element) {
+                            if (i < annList.length)
+                            {
+                                $(this).find(".caption-subject").text(Sigma.lookup(catLookup, annList[i].CtgId));
+                                $(this).find(".caption-helper").text(annList[i].StartDate);
+                                $(this).find(".portlet-body h4").text(annList[i].Subject);
+                                $(this).find(".show-summary").text(annList[i].AnnounceSummary);
+                                $(this).find(".show-more").html(annList[i].Announce);
+                                $(this).show();
+                            }
+                            i++;
+                        });
+                        moment.locale('tr');
+                        $('.caption-helper').each(function (index, element) {
+                            $(element).text(moment($(element).text(), "YYYY.MM.DD hh:mm:ss").fromNow());
+                        });
+                        
+                    },
+                    showErrorToast: true
+                });
+            });
+        });
+    </script>
+}

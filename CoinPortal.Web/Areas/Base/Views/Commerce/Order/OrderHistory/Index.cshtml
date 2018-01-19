@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnGet" class="btn green">Getir</a>
+                </div>                                
+            </div>
+            <div class="portlet-body">
+                <table id="tblOrders" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmTntAutUsr_info"></table>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+
+@section pageScript
+{
+    <script src="~/Areas/Base/Scripts/Commerce/Order/OrderHistory.js"></script>
+}
+
+

@@ -1,0 +1,242 @@
+﻿@using Devia.Sigma.Business.Auth.Session
+@using Devia.Sigma.Business.Auth.Entity
+@using Devia.Sigma.Business.Document
+
+@{
+ViewBag.Title = "Index";
+Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section pageHeader
+{
+    <link href="~/Theme/Metronic/assets/pages/css/profile.min.css" rel="stylesheet" type="text/css">
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PROFILE SIDEBAR -->
+        <div class="profile-sidebar">
+            <!-- PORTLET MAIN -->
+            <div class="portlet light profile-sidebar-portlet ">
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                    <img src='@("/" + SgSession.Current.UserInfo.ImgPath)'  class="img-responsive">
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name"> @SgSession.Current.UserInfo.DisplayName </div>
+                    <div class="profile-usertitle-job" style="text-transform: none;"> @SgSession.Current.UserInfo.Username </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li portlet-id="portletGeneralInfo" class="active" ><a> <i class="fa fa-home"></i> Profilim</a> </li>
+                        <li portlet-id="portletUpdateInfo"><a> <i class="fa fa-refresh"></i> Bilgi Güncelleme </a></li>
+                        <li portlet-id="portletUpdatePassword"><a ><i class="fa fa-key"></i> Şifre Güncelleme</a></li>
+                        <li portlet-id="portletSettings"><a><i class="fa fa-cogs"></i> Ayarlar</a></li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+            <!-- END PORTLET MAIN -->
+            <!-- PORTLET MAIN -->
+            
+            <!-- END PORTLET MAIN -->
+        </div>
+        <!-- END BEGIN PROFILE SIDEBAR -->
+        <!-- BEGIN PROFILE CONTENT -->
+        <div class="profile-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light" id="portletGeneralInfo">
+                        <div class="portlet-title">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase">PROFİLİM</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form class="form-horizontal">
+                                <div class="form-body">
+                                    @{
+                                        var user = (FrmTntAutUsr)SgSession.Current.UserInfo;
+                                        
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Ad</label>
+                                            <div class="col-md-9">
+                                                <label class="control-label bold font-blue-madison">@user.Name</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Soyad</label>
+                                            <div class="col-md-9">
+                                                <label class="control-label bold font-blue-madison">@user.Surname</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">E-posta</label>
+                                            <div class="col-md-9">
+                                                <label class="control-label bold font-blue-madison">@user.Mail</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Cep Telefonu</label>
+                                            <div class="col-md-9">
+                                                <label class="control-label bold font-blue-madison">@user.CellPhone</label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="portlet light display-hide" id="portletUpdateInfo">
+                        <div class="portlet-title">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase">BİLGİ GÜNCELLEME</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form id="formUpdateInfo" class="form-horizontal">                                
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Görsel</label>
+                                        <div class="col-md-9">
+                                            <div class="fileinput @(String.IsNullOrEmpty(user.ImgPath) ? "fileinput-new" : "fileinput-exists" )" data-provides="fileinput">
+                                                <div id="imgPreviewDiv" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 120px; height: 90px;">
+                                                    @if(String.IsNullOrEmpty(user.ImgPath) == false)
+                                                    {
+                                                        <img src="@Url.Content("~/" + user.ImgPath)"/>
+                                                    }
+                                                </div>
+                                                <div class="pull-right" style="margin-left:10px;">
+                                                    <span class="btn default btn-file">
+                                                        <span class="fileinput-new"> Resim Seç </span>
+                                                        <span class="fileinput-exists"> Değiştir </span>
+                                                        <input type="file">
+                                                    </span>
+                                                    <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Sil </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Ad</label>
+                                        <div class="col-md-4">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" class="form-control" placeholder="Ad" id="Name" name="Name" value="@user.Name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Soyad</label>
+                                        <div class="col-md-4">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" class="form-control" placeholder="Soyad" id="Surname" name="Surname" value="@user.Surname">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Cep Telefonu </label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" placeholder="Cep Telefonu" id="CellPhone" name="CellPhone" value="@user.CellPhone">
+                                        </div>
+                                    </div>
+
+                                   
+                                </div>
+                            </form>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button id="btnUpdateInfo" class="btn green">Değişiklikleri Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portlet light display-hide" id="portletUpdatePassword">
+                        <div class="portlet-title">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase">ŞİFRE GÜNCELLEME</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form id="formUpdatePassword" class="form-horizontal">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Mevcut Şifre</label>
+                                        <div class="col-md-4">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="password" class="form-control" placeholder="Mevcut Şifre" id="CurrentPassword" name="CurrentPassword">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Yeni Şifre</label>
+                                        <div class="col-md-4">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="password" class="form-control" placeholder="Yeni Şifre" id="NewPassword" name="NewPassword">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Yeni Şifre Tekrar</label>
+                                        <div class="col-md-4">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="password" class="form-control" placeholder="Yeni Şifre Tekrar" id="NewPasswordAgain" name="NewPasswordAgain">
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </div>
+                            </form>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button id="btnUpdatePassword" class="btn green">Şifreyi Değiştir</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portlet light display-hide" id="portletSettings">
+                        <div class="portlet-title">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase">AYARLAR</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PROFILE CONTENT -->
+    </div>
+</div>
+
+@section pageScript
+{
+    <script>
+        var genTntIdColumn = @Html.Raw(SgSession.Current.Tenant.Opt.UseTenantIdOnDml);
+    </script>
+    <script src="~/Areas/Base/Scripts/Auth/User/MyProfile.js"></script>
+}

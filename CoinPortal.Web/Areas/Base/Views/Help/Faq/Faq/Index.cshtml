@@ -1,0 +1,93 @@
+﻿@using Devia.Sigma.Business.Help.Faq.Entity
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+<link href="../../Theme/Metronic/assets/pages/css/faq.min.css" rel="stylesheet" type="text/css">
+
+<div class="faq-page faq-content-1">
+    <div class="search-bar ">
+        <div class="input-group">
+            <input id="txtSearchFaq" type="text" class="form-control" placeholder="Ara...">
+        </div>
+    </div>
+    <div class="faq-content-container">
+        <div class="row">
+            @{
+                var index = 0;
+                foreach (var ctg in FrmFaqCat.SelectAll().OrderBy(a => a.Priority))
+                {
+                    if (index % 2 == 0)
+                    {
+                        @:<div class="col-md-12 faq-category">
+                    }
+                    <div id="faqmay" class="faq-section">
+                        <h2 class="faq-title  font-blue">@ctg.CatName</h2>
+                        <div class="panel-group accordion faq-content" id="accordion_@ctg.CatId">
+                            @foreach (var que in FrmFaq.SelectAll(a => a.CatId == ctg.CatId).OrderBy(a => a.Priority))
+                            {
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <i class="fa fa-circle"></i>
+                                            <a class="accordion-toggle" href="#collapse_@que.QuestionId" data-toggle="collapse" data-parent="#accordion_@ctg.CatId"> @que.Question</a>
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse collapse" id="collapse_@que.QuestionId">
+                                        <div class="panel-body">
+                                            <p> @Html.Raw(@que.Answer)  </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    if (index % 2 == 1)
+                    {
+                        @:</div>
+                    }
+                    index++;
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+@section pageScript
+{
+        <script >
+            jQuery(document).ready(function () {
+              
+                $("#txtSearchFaq").bind("input", function () {
+                    var value = $("#txtSearchFaq").val();                    
+                    if (value == "")
+                    {
+                        $('.panel').show();
+                        $('.faq-section').show();
+                    }
+                    else
+                    {
+                        $('.faq-section').hide();
+                        $('.panel').each(function (index, element) {
+                            var question =  $(element).find('.accordion-toggle').html();
+                            var answer =  $(element).find('.panel-body').html();
+                            
+                            if(question.toLowerCase().indexOf(value.toLowerCase()) != -1 ||
+                                answer.toLowerCase().indexOf(value.toLowerCase()) != -1)
+                            {
+                                $(element).parents('.faq-section').show();
+                                $(element).show();
+                            }
+                            else {
+                                $(element).hide();
+                            }
+                        });
+                    }
+                });                    
+            });
+        </script>
+    }

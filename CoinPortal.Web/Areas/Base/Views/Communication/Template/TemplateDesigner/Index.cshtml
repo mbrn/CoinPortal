@@ -1,0 +1,147 @@
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div id="carousel" class="carousel slide" data-interval="false">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <!-- Slide -->
+        <div class="item active">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- BEGIN SAMPLE FORM PORTLET-->
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <span class="caption-subject bold font-green-haze"> Þablonlar </span>
+                            </div>
+                            <div class="actions">
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Ekle
+                                        <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a id="btnAddMailTemplate">
+                                                <i class="fa fa-envelope"></i> Mail Þablonu Ekle
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a id="btnAddSmsTemplate">
+                                                <i class="fa fa-phone-square"></i> Sms Þablonu Ekle
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <table id="tblFrmComTmp" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmComTmp_info"></table>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!-- END SAMPLE FORM PORTLET-->
+                </div>
+            </div>
+        </div>
+        <!-- Slide -->
+        <div class="item">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- BEGIN SAMPLE FORM PORTLET-->
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <a class="btn default btnBack"><i class="fa fa-arrow-left"></i></a> 
+                                <span id="mailTemplateHeader" class="caption-subject bold font-green-haze"> Yeni Þablon </span>
+                            </div>
+                            <div class="actions"></div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form id="frmMailTemplate" class="horizontal-form">
+                                <div class="form-body">
+                                    @SgHtml.TextBox("Guid", "Guid", "col-md-6 display-hide", "Guid", 50, "text", "")
+                                    @SgHtml.CheckBox("Status", "Status", "col-md-6 display-hide")
+                                    @SgHtml.TextBox("Lastupdated", "Lastupdated", "col-md-6 display-hide", "Lastupdated", 16, "numeric", "")
+                                    @SgHtml.TextBox("TmpId", "TmpId", "col-md-6 display-hide", "TmpId", 10, "numeric", "disabled")
+                                    @SgHtml.TextBox("TmpTyp", "TmpTyp", "col-md-6 display-hide ", "TmpTyp", 1, "text", "")
+                                    <div class="row">                                        
+                                        @SgHtml.TextBox("TmpKey", "Þablon Kodu", "col-md-6 ", "Þablon Kodu", 100, "text", "")
+                                        @SgHtml.TextBox("Header", "Konu", "col-md-6 ", "Konu", 100, "text", "", inputClass:"sg-multi-lang")                                        
+                                    </div>
+                                    <div class="row">
+                                        @SgHtml.CheckBox("IsSystemTemplate", "Sistem Þablonu", "col-md-6 ")
+                                    </div>
+                                    <div class="row">                                        
+                                        @*@SgHtml.TextBox("Text", "Text", "col-md-6 ", "Text", 4294967295, "text", "")*@
+                                        @SgHtml.RichTextBox("Text", "Mail Þablonu", "col-md-12", textareaClass: "sg-multi-lang", attribute:"data-is-richtextbox=true")
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-actions right">
+                                    <button type="button" class="btn default btnBack">Vazgeç</button>
+                                    <button id="btnSaveMailTemplate" type="button" class="btn green"><i class="fa fa-check"></i> Kaydet</button>
+                                    <button id="btnUpdateMailTemplate" type="button" class="btn green"><i class="fa fa-check"></i> Güncelle</button>
+                                </div>
+                            </form>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!-- END SAMPLE FORM PORTLET-->
+                </div>
+            </div>
+        </div>
+        <!-- Slide -->
+        <div class="item">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- BEGIN SAMPLE FORM PORTLET-->
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <a class="btn default btnBack"><i class="fa fa-arrow-left"></i></a> 
+                                <span id="smsTemplateHeader" class="caption-subject bold font-green-haze"> Yeni Þablon </span>
+                            </div>
+                            <div class="actions"></div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form id="frmSmsTemplate" class="horizontal-form">
+                                <div class="form-body">
+                                    @SgHtml.TextBox("Guid", "Guid", "col-md-6 display-hide", "Guid", 50, "text", "")
+                                    @SgHtml.CheckBox("Status", "Status", "col-md-6 display-hide")
+                                    @SgHtml.TextBox("Lastupdated", "Lastupdated", "col-md-6 display-hide", "Lastupdated", 16, "numeric", "")
+                                    @SgHtml.TextBox("TmpId", "TmpId", "col-md-6 display-hide", "TmpId", 10, "numeric", "disabled")
+                                    @SgHtml.TextBox("TmpTyp", "TmpTyp", "col-md-6 display-hide", "TmpTyp", 1, "text", "")
+                                    @SgHtml.TextBox("Header", "Konu", "col-md-6 display-hide", "Konu", 100, "text", "")
+
+                                    <div class="row">
+                                        @SgHtml.TextBox("TmpKey", "Þablon Kodu", "col-md-6 ", "Þablon Kodu", 100, "text", "")      
+                                        @SgHtml.CheckBox("IsSystemTemplate", "Sistem Þablonu", "col-md-6 ")   
+                                    </div>
+                                    <div class="row">
+                                        @SgHtml.RichTextBox("Text", "Sms Þablonu", "col-md-12 ", "Sms Þablonu", 500, textareaClass: "sg-multi-lang", attribute: "data-is-richtextbox=false")
+                                    </div>
+                                </div>
+                                <div class="form-actions right">
+                                    <button type="button" class="btn default btnBack">Vazgeç</button>
+                                    <button id="btnSaveSmsTemplate" type="button" class="btn green"><i class="fa fa-check"></i> Kaydet</button>
+                                    <button id="btnUpdateSmsTemplate" type="button" class="btn green"><i class="fa fa-check"></i> Güncelle</button>
+                                </div>
+                            </form>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!-- END SAMPLE FORM PORTLET-->
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+@section pageScript
+{
+    <script src="~/Areas/Base/Scripts/Communication/Template/TemplateDesigner.js"></script>
+}

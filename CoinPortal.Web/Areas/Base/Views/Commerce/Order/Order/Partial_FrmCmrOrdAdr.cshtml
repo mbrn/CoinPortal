@@ -1,0 +1,104 @@
+@model Devia.Sigma.Business.Commerce.Order.Entity.FrmCmrOrdAdr
+@using Devia.Sigma.Business.Parameter.Entity
+
+<form class="form-horizontal" id="frmFrmCmrOrdAdr_@Model.AdrType" type="@Model.AdrType">
+    <div class="form-body"  style="padding-bottom:0px;">
+        @SgHtml.TextBox("Guid", "Guid", "col-md-12 display-hide", "Guid", 50, "text", "", value: @Model.Guid)
+        @SgHtml.CheckBox("Status", "Status", "col-md-12 display-hide")
+        @SgHtml.TextBox("Lastupdated", "Lastupdated", "col-md-12 display-hide", "Lastupdated", 16, "numeric", "", value: @Model.Lastupdated.ToString())
+        @SgHtml.TextBox("OrdId", "OrdId", "col-md-12  display-hide", "OrdId", 19, "numeric", "", value: @Model.OrdId.ToString())
+        @SgHtml.TextBox("AdrId", "AdrId", "col-md-12  display-hide", "AdrId", 19, "numeric", "disabled", value: @Model.AdrId.ToString())
+        @SgHtml.TextBox("AdrType", "AdrType", "col-md-12 display-hide", "AdrType", 1, "text", "", value: Model.AdrType)
+
+        <div class="form-group  @((Model.AdrType == "B") ? "" : "display-hide")">
+            <div class="col-md-12">
+                <label class="control-label" style="text-align:left;">Faturam kargo ile ayný adrese gönderilsin</label>
+                <input type="checkbox" class="form-control" id="SameAsShipment" name="SameAsShipment" @(Model.SameAsShipment ? "checked" : "")>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-md-3 control-label" style="text-align:left;">Ad / Þirket Adý</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="Name" name="Name" placeholder="Ad / Þirket Adý" maxlength="200" value="@Model.Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" style="text-align:left;">Soyad / Þirket Ünvaný</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="Surname" name="Surname" placeholder="Soyad / Þirket Ünvaný" maxlength="200" value="@Model.Surname">
+            </div>
+        </div>
+
+        <div class="form-group display-hide">
+            <label class="col-md-3 control-label" style="text-align:left;">Ülke</label>
+            <div class="col-md-9">
+                @(Html.Sigma().ComboBox<FrmPrmCountry>("CountryCode", "CountryCode", "CountryName", "select2", emptyItem:false))
+            </div>
+        </div>
+        <div class="form-group @(Model.SameAsShipment ? "display-hide" : "")">
+            <label class="col-md-3 control-label" style="text-align:left;">Ýl</label>
+            <div class="col-md-9">
+                @*<select id="CityId" name="CityId" class="select2"></select>*@
+                @(Html.Sigma().ComboBox<FrmPrmCity>("CityId", "CityId", "CityName", "select2", emptyItem: true, defaultValue: Model.CityId.ToString()))
+            </div>
+        </div>
+        <div class="form-group @(Model.SameAsShipment ? "display-hide" : "")">
+            <label class="col-md-3 control-label" style="text-align:left;">Ýlçe</label>
+            <div class="col-md-9">
+                <select id="TownId" name="TownId" disabled class="select2"></select>
+            </div>
+        </div>
+        <div class="form-group @(Model.SameAsShipment ? "display-hide" : "")">
+            <label class="col-md-3 control-label" style="text-align:left;">Adres</label>
+            <div class="col-md-9">
+                @*<input type="text" class="form-control" id="AddressText" name="AddressText" placeholder="Adres" maxlength="250">*@
+                <textarea id="AddressText" name="AddressText"  class="form-control" rows="2" maxlength="250" placeholder="Adres" >@Model.AddressText</textarea>
+            </div>
+        </div>
+
+        <div class="form-group @(Model.SameAsShipment ? "display-hide" : "")">
+            <label class="col-md-3 control-label" style="text-align:left;">Posta Kodu</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="ZipCode" name="ZipCode" placeholder="Posta Kodu" maxlength="10" value="@Model.ZipCode">
+            </div>
+        </div>
+
+        <div class="form-group @(Model.SameAsShipment ? "display-hide" : "")">
+            <label class="col-md-3 control-label" style="text-align:left;">Telefon</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="Phone" name="Phone" placeholder="Telefon" maxlength="100" value="@Model.Phone">
+            </div>
+        </div>
+
+        <div class="form-group @((Model.AdrType == "B") ? "" : "display-hide")">
+            <label class="col-md-3 control-label" style="text-align:left;">Fatura</label>
+            <div class="col-md-9">
+                <div class="mt-radio-inline">
+                    <label class="mt-radio">
+                        <input type="radio" name="BillingType" id="BillingTypeB" value="B" @(Model.BillingType.SgIn("B", "", null) ? "checked" : "")> Bireysel
+                    </label>
+                    <label class="mt-radio">
+                        <input type="radio" name="BillingType" id="BillingTypeK" value="K" @(Model.BillingType.SgIn("K") ? "checked" : "")> Kurumsal
+                    </label>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="form-group @((Model.AdrType == "B") ? "" : "display-hide")">
+            <label class="col-md-3 control-label" style="text-align:left;">Tc No / Vergi No</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="TcknTaxNo" name="TcknTaxNo" placeholder="Tc No / Vergi No" maxlength="15" value="@Model.TcknTaxNo">
+            </div>
+        </div>
+
+        <div class="form-group @((Model.AdrType == "B" && Model.BillingType == "K") ? "" : "display-hide")">
+            <label class="col-md-3 control-label" style="text-align:left;">Vergi Dairesi</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="TaxOffice" name="TaxOffice" placeholder="Vergi Dairesi" maxlength="100" value="@Model.TaxOffice">
+            </div>
+        </div>
+        
+    </div>
+</form>
+

@@ -1,0 +1,105 @@
+@using Devia.Sigma.Business.Auth.Entity
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section pageHeader
+{
+    <style>
+        table.dataTable tbody td {
+            vertical-align: middle;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmMonSsnRetrieve" class="btn green">@Html.Sigma().Icon("f002") Getir</a>
+                    <a id="btnFrmMonSsnClear" class="btn btn-default">@Html.Sigma().Icon("f1f8") Temizle</a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="frmFrmMonSsn">
+                    <div class="form-body">
+                        @SgHtml.TextBox("SsnId", "Session No", "col-md-3 ", "Session No", 19, "numeric")
+                        @SgHtml.TextBox("CltIpAddr", "Ip Adres", "col-md-3 ", "Ip Adres", 50, "text")
+                        
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Kullanýcý</label>
+                            <select id="UsrId" name="UsrId" class="form-control select2">
+                                <option value="-1">Tüm Kullanýcýlar</option>
+                                @foreach (var usr in FrmTntAutUsr.SelectAll().OrderBy(a => a.Username))
+                                {
+                                    <option value="@usr.UsrId">@usr.Username</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Login Durumu</label>
+                            <select id="LoginStatus" name="LoginStatus" class="form-control select2">
+                                <option value="-1">Tümü</option>
+                                <option value="L">Login</option>
+                                <option value="E">Login Hatalý</option>
+                                <option value="K">Baðlantý sonlandýrýldý</option>
+                                <option value="O">Login Sonlandý</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Login Tipi</label>
+                            <select id="LoginType" name="LoginType" class="form-control select2">
+                                <option value="-1">Tümü</option>
+                                <option value="N">Normal</option>
+                                <option value="C">Cookie</option>
+                                <option value="T">Token</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Browser Adý</label>
+                            <select id="BrowserName" name="BrowserName" class="form-control select2">
+                                <option value="-1">Tümü</option>
+                                <option value="Chrome">Chrome</option>
+                                <option value="InternetExplorer">Internet Explorer</option>
+                                <option value="Firefox">Firefox</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">Tarih Aralýðý</label>
+                            <div class="input-icon">
+                                <i class="fa fa-calendar"></i>
+                                <input type="text" id="dateRange" name="dateRange" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Cihaz Tipi</label>
+                            <select id="deviceType" name="deviceType" class="form-control select2">
+                                <option value="-1">Tümü</option>
+                                <option value="M">Mobil</option>
+                                <option value="P">PC</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="clearfix"></div>
+                <!-- Grid -->
+                <table id="tblFrmMonSsn" class="table table-striped table-hover table-bordered dataTable no-footer table-checkable" cellspacing="0" role="grid" aria-describedby="tblFrmMonSsn_info"></table>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+@section pageScript
+{
+    <script>
+         var tntAutUserLookup = JSON.parse('@Html.Raw(FrmTntAutUsr.SelectAll().ToDictionary(a => a.UsrId.ToString(), a => a.Username).SgSerializeToJson())');
+    </script>
+    <script src="~/Areas/Base/Scripts/FrmMonSsn.js"></script>
+    <script src="~/Areas/Base/Scripts/Sys/Monitoring/FrmMonSsn.js"></script>
+}

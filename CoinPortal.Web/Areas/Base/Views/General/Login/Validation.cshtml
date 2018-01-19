@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+
+    ViewBag.Title = "AuthenticateUser";
+    Layout = null;
+    if (Devia.Sigma.Business.Auth.Session.SgSession.Current.IsLoggedIn)
+    {
+        var url = @"..\..\Base\Empty\Index";
+        var screen = Devia.Sigma.Business.Auth.Session.SgSession.Current.Tenant.GetDefaultScreen(Devia.Sigma.Business.Auth.Session.SgSession.Current.UserInfo.UsrId);
+        if (screen != null)
+        {
+            url = @"~\{0}\{1}\Index".SgFormat(screen.Area, screen.Controller);
+        }
+
+        Response.Redirect(url);
+    }
+    else
+    {
+        Response.Redirect(Url.Action("Index", "Login", new { loginError = true }), false);
+    }
+}
+

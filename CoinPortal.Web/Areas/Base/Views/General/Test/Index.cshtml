@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section pageHeader
+{
+    <style>
+        table.dataTable tbody td {
+            vertical-align: middle;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmTestTablosuAdd" class="btn green">@Html.Sigma().Icon("f067") Ekle</a>
+                </div>
+                <div class="actions"></div>
+            </div>
+            <div class="portlet-body">
+                <form role="form" id="frmFrmAnnDef">
+                    @SgHtml.DateTime("TarihSaat", "Tarih Saat", "col-md-4")
+                    @SgHtml.Date("Tarih", "Tarih", "col-md-4")
+                    @SgHtml.Time("Saat", "Saat", "col-md-4")
+                </form>
+                @*<div class="form-group">
+                        <div class="input-group date datetime">
+                            <input type="text" size="16" readonly class="form-control bg-white">
+                            <span class="input-group-btn">
+                                <button class="btn default date-set" type="button">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>*@
+
+                <table id="tblFrmTestTablosu" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmTestTablosu_info"></table>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+@section pageScript
+{
+    <script>
+        var tableNameFrmTestTablosu = '#tblFrmTestTablosu';
+        var tableFrmTestTablosu;
+        var btnFrmTestTablosuAdd = $('#btnFrmTestTablosuAdd');
+        var formNameFrmTestTablosu = '#frmFrmTestTablosu';
+
+        jQuery(document).ready(function () {
+            /*============================================================================================*/
+            // Init
+            /*============================================================================================*/
+            tableFrmTestTablosu = Sigma.createDT({
+                tableName: tableNameFrmTestTablosu,
+                showButtons: true,
+                columns: [{ title: "Guid", mData: "Guid", visible: false, searchable: false },
+                { title: "Status", mData: "Status", sgType: "boolean"},
+                { title: "Lastupdated", mData: "Lastupdated", visible: false, searchable: false },
+                { title: "Role No", mData: "RoleId" },
+                { title: "Tnt Id", mData: "TntId" },
+                { title: "Item No", mData: "ItemId" },
+                { title: "Item Tipi", mData: "ItemType", sgLookup: { "A": "Ankara", "B": "Bursa" } },
+                { title: "Yetki Seviyesi", mData: "AuthLevel", sgType: 'date' },
+                { title: "InsertDatetime", mData: "InsertDatetime", sgType: "datetime"},
+                { title: "InsertUser", mData: "InsertUser" },
+                { title: "", searchable: false, orderable: false },
+                ],
+                columnDefs: [{
+                    targets: -1,
+                    defaultContent: "<div style=\"width:125px;\">" +
+                        '<button type="button" class="btn blue-hoki btn-outline row-edit tooltips" data-container="body" data-placement="top" data-original-title="Düzenle"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" class="btn green row-save tooltips display-hide" data-container="body" data-placement="top" data-original-title="Kaydet"><i class="fa fa-check"></i></button>' +
+                        '<button type="button" class="btn green row-update tooltips display-hide" data-container="body" data-placement="top" data-original-title="Güncelle"><i class="fa fa-check"></i></button>' +
+                        '<button type="button" class="btn red-soft row-cancel tooltips display-hide"  data-container="body" data-placement="top" data-original-title="İptal"><i class="fa fa-times"></i></button>' +
+                        '<button type="button" class="btn red-soft btn-outline row-delete tooltips" data-container="body" data-placement="top" data-original-title="Sil"><i class="fa fa-trash"></i></button>' +
+                    "</div>"
+                }],
+                editable: {
+                    onSave: function () {
+                        Sigma.toastSuccess('ok');
+                        // return false; // bu şekilde işlemin iptal olmasını saglayabiliriz. 
+                    },
+                    onUpdate: function () {
+                        Sigma.toastSuccess('ok');
+                        // return false; // bu şekilde işlemin iptal olmasını saglayabiliriz. 
+                    },
+                    
+                    onDelete: "../../Test/DeleteFrmTestTablosu",
+                   
+                    fields: {
+                        ItemId: {
+                            type: "number",
+                            onControlCreated: function (containerTd) {
+                                $('input', containerTd).css('background', 'red');
+                            }
+                        },
+                    }
+                }
+            });
+
+            $(tableNameFrmTestTablosu).on('draw.dt', function () {
+                $('.tooltips').tooltip();
+            });
+
+            //fillData();
+            /*============================================================================================*/
+
+            /*============================================================================================*/
+            // Events
+            /*============================================================================================*/
+            btnFrmTestTablosuAdd.click(function () {
+                Sigma.addNewRow(tableFrmTestTablosu);
+            });
+            /*============================================================================================*/
+        });
+        function fillData() {
+            Sigma.ajax({
+                url: "../../Test/GetFrmTestTablosuList",
+                blockUI: false,
+                onSuccess: function (data) {
+                    tableFrmTestTablosu.clear().draw();
+                    tableFrmTestTablosu.rows.add(JSON.parse(data)).draw();
+                }
+            });
+        }
+
+
+
+
+    </script>
+}

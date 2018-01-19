@@ -1,0 +1,168 @@
+@using Devia.Sigma.Business.Sys.Provider.Entity
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmPrvSave" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</a>
+                    <a id="btnFrmPrvUpdate" class="btn blue-madison disabled">@Html.Sigma().Icon("f021") Güncelle</a>
+                    <a id="btnFrmPrvDelete" class="btn red-sunglo disabled">@Html.Sigma().Icon("f00d") Sil</a>
+                    <a id="btnFrmPrvClear" class="btn btn-default">@Html.Sigma().Icon("f1f8") Temizle</a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="frmFrmPrv">
+                    <div class="form-body">
+                        @SgHtml.TextBox("Guid", "Guid", "col-md-6 display-hide", "Guid", 50, "text", "")
+                        @SgHtml.CheckBox("Status", "Status", "col-md-6 display-hide")
+                        @SgHtml.TextBox("Lastupdated", "Lastupdated", "col-md-6 display-hide", "Lastupdated", 16, "numeric", "")
+                        @SgHtml.TextBox("PrvId", "PrvId", "col-md-6 display-hide", "PrvId", 19, "numeric", "disabled")
+                        @*@SgHtml.TextBox("PrvKey", "Key", "col-md-4 ", "Key", 100, "text", "")*@
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Key</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="PrvKey" name="PrvKey" placeholder="Key" >
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default SearchProvider" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        @SgHtml.TextBox("PrvName", "Adý", "col-md-4 ", "Adý", 100, "text", "")
+                        @SgHtml.ComboBox("PrvType", "Tipi", FrmPrvTyp.SelectAll().ToDictionary(a => a.PrvType.ToString(), a => a.Name), "col-md-4")
+                        @SgHtml.CheckBox("IsDefault", "Varsayýlan", "col-md-4 ")
+                        @SgHtml.CheckBox("IsSystemProvider", "Sistem varsayýlaný mý", "col-md-4 ")
+                        @SgHtml.CheckBox("NeedAccount", "Hesap Gereksinimi", "col-md-4 ")
+                        @SgHtml.TextBox("Implementation", "Implementation", "col-md-12 ", "Implementation", 500, "text", "")
+
+                    </div>
+                </form>
+
+                <div class="clearfix"></div>
+                <!-- Grid -->
+
+
+                <div class="portlet box blue-madison">
+                    <div class="portlet-title">
+                        <ul class="nav nav-tabs pull-left">
+                            <li class="active"><a href="#tabFldType" data-toggle="tab" aria-expanded="true">@Html.Sigma().Icon("f007") Provider Alanlarý</a></li>
+                        </ul>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabFldType">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- BEGIN SAMPLE FORM PORTLET-->
+                                        <div class="portlet light bordered">
+                                            <div class="portlet-title">
+                                                <div class="caption">
+                                                    <a id="btnFrmPrvFldAdd" class="btn green">@Html.Sigma().Icon("f067") Ekle</a>
+                                                </div>
+                                                <div class="actions"></div>
+                                            </div>
+                                            <div class="portlet-body">
+                                                <table id="tblFrmPrvFld" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmPrvFld_info"></table>
+                                                <div class="clearfix"></div>
+
+                                                <div id="modalFormFrmPrvFld" class="modal fade bs-modal-lg" tabindex="-1" aria-hidden="true" style="display: none;">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                                <h4 class="modal-title">FrmPrvFld</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                                                                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                                                                        <div class="row">
+                                                                            <form role="form" id="frmFrmPrvFld">
+                                                                                <div class="form-body">
+                                                                                    @SgHtml.TextBox("Guid", "Guid", "col-md-6 display-hide", "Guid", 50, "text", "")
+                                                                                    @SgHtml.CheckBox("Status", "Status", "col-md-6 display-hide")
+                                                                                    @SgHtml.TextBox("Lastupdated", "Lastupdated", "col-md-6 display-hide", "Lastupdated", 16, "numeric", "")
+                                                                                    @SgHtml.TextBox("PrvId", "PrvId", "col-md-6  display-hide", "PrvId", 19, "numeric", "")
+                                                                                    @SgHtml.TextBox("FldKey", "Alan Key", "col-md-6 ", "Alan Key", 100, "text", "")
+                                                                                    @*@SgHtml.TextBox("ValType", "Deðer Tipi", "col-md-6 ", "Deðer Tipi", 100, "text", "")*@
+                                                                                    <div class="form-group col-md-6 ">
+                                                                                        <label class="control-label">Veri Tipi</label>
+                                                                                        <select id="ValType" name="ValType" class="form-control select2">
+                                                                                            <option value="string">string</option>
+                                                                                            <option value="number">number</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    @SgHtml.TextBox("DefaultValue", "Varsayýlan Deðer", "col-md-6 ", "Varsayýlan Deðer", 1000, "text", "")
+                                                                                    @SgHtml.TextBox("LabelText", "Label Texti", "col-md-6 ", "Label Texti", 1000, "text", "")
+                                                                                    @SgHtml.Switch("IsMandatory", "Zorunlu mu", "col-md-6 ")
+                                                                                    @SgHtml.Switch("IsVisible", "Görünürlük", "col-md-6 ")
+                                                                                </div>
+                                                                            </form>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button id="btnFrmPrvFldCancel" type="button" data-dismiss="modal" class="btn btn-default">Ýptal</button>
+                                                                <button id="btnFrmPrvFldSave" type="button" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</button>
+                                                                <button id="btnFrmPrvFldUpdate" type="button" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END SAMPLE FORM PORTLET-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+<div id="modalFormProviders" class="modal fade bs-modal-lg" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Provider Ara</h4>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="tblFrmPrv" class="table table-striped table-hover table-bordered dataTable no-footer table-checkable" cellspacing="0" role="grid" aria-describedby="tblFrmPrv_info"></table>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnActMrcCancel" type="button" data-dismiss="modal" class="btn btn-default">Ýptal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pageScript
+{
+    <script>
+        var prvTypelookup = JSON.parse('@Html.Raw(FrmPrvTyp.SelectAll().ToDictionary(a => a.PrvType, a => a.Name).SgSerializeToJson())');
+    </script>
+    <script src="~/Areas/Base/Scripts/Sys/Provider/FrmPrv.js"></script>
+}

@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmTntTypCntAdd" class="btn green">@Html.Sigma().Icon("f067") Ekle</a>
+                </div>
+                <div class="actions"></div>
+            </div>
+            <div class="portlet-body">
+                <table id="tblFrmTntTypCnt" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmTntTypCnt_info"></table>
+                <div class="clearfix"></div>
+
+                <div id="modalFormFrmTntTypCnt" class="modal fade bs-modal-lg" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">FrmTntTypCnt</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                                        <div class="row">
+                                            <form role="form" id="frmFrmTntTypCnt">
+                                                <div class="form-body">
+                                                    <div class="form-group col-md-6 display-hide">
+                                                        <label class="control-label">Guid</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="Guid" name="Guid" placeholder="Guid" maxlength="50">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 display-hide">
+                                                        <label class="control-label">Status</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="checkbox" class="form-control" id="Status" name="Status" placeholder="Status" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 display-hide">
+                                                        <label class="control-label">Lastupdated</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="Lastupdated" name="Lastupdated" placeholder="Lastupdated" maxlength="16" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">İçerik Kodu</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="CntCode" name="CntCode" placeholder="İçerik Kodu" maxlength="3">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">İçerik Adı</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="CntName" name="CntName" placeholder="İçerik Adı" maxlength="100">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">İkon</label>
+                                                        <select class="form-control input-block-level select2" id="CntIcon" name="CntIcon" placeholder="İkon">
+                                                            @Html.Partial("../SharedPartials/FontawesomeIconOptionList")
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">Description</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="Description" name="Description" placeholder="Açıklama" maxlength="250">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnFrmTntTypCntCancel" type="button" data-dismiss="modal" class="btn btn-default">İptal</button>
+                                <button id="btnFrmTntTypCntSave" type="button" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</button>
+                                <button id="btnFrmTntTypCntUpdate" type="button" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+@section pageScript
+{
+    <script src="~/Areas/Base/Scripts/Auth/Tenancy/FrmTntTypCnt.js"></script>
+}
+
+
+
+

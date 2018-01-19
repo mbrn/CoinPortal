@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnCacheRetrieve" class="btn green">@Html.Sigma().Icon("f002") Getir</a>
+                    <a id="btnCacheRefreshAll" class="btn green"><i class="fa fa-refresh"></i> Tümünü Yenile</a>
+                    <a id="btnCacheRefreshSelected" class="btn green"><i class="fa fa-refresh"></i> Seçili Olanları Yenile</a>                    
+                </div>
+            </div>
+            <div class="portlet-body">
+                <!-- Grid -->
+                <table id="tblCache" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmComEml_info"></table>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+@section pageScript
+{
+    <script src="~/Areas/Base/Scripts/Sys/Cache/Cache.js"></script>
+}

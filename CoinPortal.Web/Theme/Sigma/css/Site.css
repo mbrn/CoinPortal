@@ -1,0 +1,82 @@
+﻿
+
+/*.table tbody tr.selected
+{
+    background-color:#b0bed9 !important;
+}
+.table tbody tr.selected:hover
+{
+    background-color: #a9b7d1 !important;
+}
+
+.table tbody tr td.center{
+    text-align:center;
+}*/
+
+/*File Upload CSS*/
+/*.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background: red;
+    cursor: inherit;
+    display: block;
+}
+
+input[readonly] {
+    background-color: white !important;
+    cursor: text !important;
+}*/
+
+.portlet.light .dataTables_wrapper .dt-buttons {
+    margin-top: 0px !important;
+}
+
+.margin-left{
+    margin-left:5px;
+}
+
+/*.select2-container {
+    width: 100% !important;
+    padding: 0;
+}*/
+
+/*Datatables border bottom sacma cikmasin diye css override*/
+table.dataTable.no-footer {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.00) !important;
+}
+
+/*Toastlar az daha asagida ciksin diye*/
+#toast-container{
+    margin-top:50px !important;
+}
+
+.table-scrollable > .table > thead > tr > th, table.dataTable.nowrap th, table.dataTable.nowrap td {
+            white-space: normal !important;
+        }
+
+/* Modallarda tooltip altta kalmamasi icin modallardaki componentler 10000 üzeri oluyor (icon 10055)*/
+.tooltip {
+    z-index: 19999 !important;
+}
+
+/*.select2-container {
+    width: 100% !important;
+    padding: 0;
+}*/
+
+/*Gridlerde satırların vertical center olabilmesi için eklendi*/
+table.dataTable tbody td {
+   vertical-align: middle;
+}

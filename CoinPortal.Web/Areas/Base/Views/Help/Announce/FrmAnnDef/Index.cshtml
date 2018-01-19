@@ -1,0 +1,154 @@
+@using Devia.Sigma.Web.Template.Areas.Base.Controllers.Help.Announce
+@using Devia.Sigma.Business.Help.Announce.Entity
+@using Devia.Sigma.Business.Auth.Entity
+@using Devia.Sigma.Business.Auth.Session
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+ 
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmAnnDefAdd" class="btn green">@Html.Sigma().Icon("f067") Ekle</a>
+                </div>
+                <div class="tools">
+                    <select id="cmbIsActive" class="bs-select form-control input-small" data-size="8" data-style="grey-steel">
+                        <option value="-1">Tüm Duyurular</option>
+                        <option value="1" selected>Yayýnda Olanlar</option>
+                        <option value="0">Yayýnda Olmayanlar</option>
+                    </select>
+                </div>
+                <div class="actions"></div>
+            </div>
+            <div class="portlet-body">
+                <table id="tblFrmAnnDef" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmAnnDef_info"></table>
+                <div class="clearfix"></div>
+              
+              
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+<div id="modalFormFrmAnnDef" class="modal fade bs-modal-lg" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <form role="form" id="frmFrmAnnDef">
+                                <div class="form-body">
+                                    <div class="tabbable-line">
+                                        <ul class="nav nav-tabs uppercase bold">
+                                            <li class="active">
+                                                <a href="#tab1" data-toggle="tab" aria-expanded="false">Duyuru Taným</a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#tab2" data-toggle="tab" aria-expanded="false">Duyuru metinleri</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab1">
+                                                <div class="col-md-3">
+                                                    <div class="form-group col-md-12">
+                                                        <label class="control-label ">Duyuru Resmi</label>
+                                                        <div class="input-icon right">
+                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                <div id="AnnounceImagePath" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150px; height: 150px;">
+                                                                </div>
+                                                                <div>
+                                                                    <span class="btn default btn-file">
+                                                                        <span class="fileinput-new"> Seç </span>
+                                                                        <span class="fileinput-exists"> Deðiþtir </span>
+                                                                        <input type="file">
+                                                                    </span>
+                                                                    <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Sil </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @SgHtml.Switch("IsActive", "Aktiflik", "col-md-12 ")
+
+                                                </div>
+                                                <div class="col-md-9">
+                                                    @SgHtml.TextBox("Guid", "Guid", "col-md-6 display-hide", "Guid", 50, "text", "")
+                                                    @SgHtml.CheckBox("Status", "Status", "col-md-6 display-hide")
+                                                    @SgHtml.TextBox("Lastupdated", "Lastupdated", "col-md-6 display-hide", "Lastupdated", 16, "numeric", "")
+                                                    @SgHtml.TextBox("AnnounceId", "AnnounceId", "col-md-6 display-hide", "AnnounceId", 19, "numeric", "disabled")
+                                                    @SgHtml.ComboBox("CtgId", "Kategori Adý", FrmAnnCtg.SelectAll().ToDictionary(a => a.CatId.ToString(), a => a.CatName), "col-md-6")
+                                                    @if (SgSession.Current.Tenant.Opt.UseTenantIdOnDml == false)
+                                                    {
+                                                        @SgHtml.ComboBox("TntType", "Tenant Tipi", FrmAnnDefController.GetFrmTntTyp(), "col-md-6")
+                                                        @SgHtml.ComboBox("TntId", "Tenant Adý", FrmAnnDefController.GetFrmTnt(), "col-md-6")
+                                                    }
+                                                    @SgHtml.TextBox("Tags", "Etiketler", "col-md-6 ", "HashTags", 65535, "text", "")
+                                                    @SgHtml.TextBox("Priority", "Öncelik", "col-md-6 ", "Öncelik", 2, "numeric", "")
+                                                    @SgHtml.FontawesomeCombo("Icon", "Ýkon", "col-md-6 ")
+                                                    @SgHtml.DateTime("StartDate", "Baþlama Tarihi", "col-md-6", "Baþlama Tarihi")
+                                                    @SgHtml.DateTime("FinishDate", "Bitiþ Tarihi", "col-md-6", "Bitiþ Tarihi")
+                                                    @SgHtml.TextBox("Subject", "Konu", "col-md-6 ", "Konu", 65535, "text", "")
+                                                    @SgHtml.TextBox("InsertDatetime", "InsertDatetime", "col-md-6 display-hide", "InsertDatetime", 0, "numeric", "")
+                                                    @SgHtml.TextBox("InsertUser", "InsertUser", "col-md-6 display-hide", "InsertUser", 30, "text", "")                                                    
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="tab2">
+                                                @SgHtml.RichTextBox("AnnounceSummary", "Duyuru Özet", "col-md-12 ", "Duyuru Özet", 1024, 4, "text", "")
+                                                @SgHtml.TextBox("Announce", "Duyuru", "col-md-12 ", "Duyuru", 65535, "text", "")
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnFrmAnnDefCancel" type="button" data-dismiss="modal" class="btn btn-default">Ýptal</button>
+                <button id="btnFrmAnnDefSave" type="button" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</button>
+                <button id="btnFrmAnnDefUpdate" type="button" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-modal-lg in" id="modalAnnouncetPopup" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Duyuru Ýçeriði</h4>
+            </div>
+            <div class="modal-body" id="txtAnnouncePopup">  </div>
+            <div class="modal-footer">
+                <button type="button" class="btn blue-madison" data-dismiss="modal">Tamam</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section pageScript
+{
+    <script>
+        var isSuperTenancy = JSON.parse('@Html.Raw((SgSession.Current.Tenant.Opt.UseTenantIdOnDml == false) .SgSerializeToJson())');
+        var catLookup = JSON.parse('@Html.Raw(FrmAnnCtg.SelectAll().ToDictionary(a => a.CatId, a => a.CatName).SgSerializeToJson())');
+        var tntLookup = JSON.parse('@Html.Raw(FrmAnnDefController.GetFrmTnt().SgSerializeToJson())');
+        var tntTypeLookup = JSON.parse('@Html.Raw(FrmAnnDefController.GetFrmTntTyp().SgSerializeToJson())');
+    </script>
+    <script src="~/Areas/Base/Scripts/Help/Announce/FrmAnnDef.js"></script>
+}

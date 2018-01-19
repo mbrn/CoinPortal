@@ -1,0 +1,166 @@
+﻿@using Devia.Sigma.Core.Configuration.Custom
+@using Devia.Sigma.Core.Configuration.Custom.Db
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section pageHeader
+{
+    <link href="~/Theme/Metronic/assets/global/plugins/codemirror/lib/codemirror.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmMonDtbTxnEvtRetrieve" class="btn green">@Html.Sigma().Icon("f002") Getir</a>
+                    <a id="btnFrmMonDtbTxnEvtClear" class="btn btn-default">@Html.Sigma().Icon("f1f8") Temizle</a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="frmFrmMonDtbTxnEvt">
+                    <div class="form-body">
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">Olay No</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="EvtId" name="EvtId" placeholder="Olay No" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">İşlem No</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="ActLogId" name="ActLogId" placeholder="İşlem No" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">Txn No</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="TxnId" name="TxnId" placeholder="Txn No" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">İşlem Tipi</label>
+                            <select id="EvtType" class="form-control select2">
+                                <option value="-1">Tüm Olaylar</option>
+                                <option value="ALL" selected>Tüm Queryler</option>
+                                <optgroup label="Select">
+                                    <option value="S*">Tüm Selectler</option>
+                                    <option value="SA">Select All</option>
+                                    <option value="SG">Select By Guid</option>
+                                    <option value="SK">Select By Key</option>
+                                    <option value="SE">Select Exists</option>
+                                    <option value="SV">Select Average</option>
+                                    <option value="SX">Select Max</option>
+                                    <option value="SN">Select Min</option>
+                                    <option value="SC">Select Count</option>
+                                    <option value="SS">Select Sum</option>
+                                </optgroup>
+                                <optgroup label="DML">
+                                    <option value="DML">Tüm DMLler</option>
+                                    <option value="IN">Insert</option>
+                                    <option value="UP">Update</option>
+                                    <option value="DE">Delete</option>
+                                    <option value="DA">Delete All</option>                                    
+                                </optgroup>
+                                <optgroup label="Connection">
+                                    <option value="ACT">Tüm Connection İşlemleri</option>
+                                    <option value="OP">Open</option>
+                                    <option value="CL">Close</option>
+                                    <option value="CM">Commit</option>
+                                    <option value="RB">Rollback</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">Tarih Aralığı</label>
+                            <div class="input-icon">
+                                <i class="fa fa-calendar"></i>
+                                <input type="text" id="dateRange" name="dateRange" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">Veritabanı</label>
+                            <select id="DbName" class="form-control select2">
+                                <option value="-1" selected>Tüm Veritabanları</option>
+                                @foreach (SgDbConfig db in SgConfig.Instance.DbConnections)
+                                {
+                                    <option value="@db.DbName">@db.DbName</option>
+                                }                                
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">Schema</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="SchemaName" name="SchemaName" placeholder="Şema Adı" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">Tablo Adı</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="TableName" name="TableName" placeholder="Tablo Adı" maxlength="100">
+                            </div>
+                        </div>                        
+                    </div>
+                </form>
+
+                <div class="clearfix"></div>
+                <!-- Grid -->
+                <table id="tblFrmMonDtbTxnEvt" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmMonDtbTxnEvt_info"></table>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+<div id="modalText" class="modal fade bs-modal-lg" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true"></a>
+                <div class="caption">
+                    @*<i class="fa fa-exclamation-triangle font-blue-hoki"></i>*@
+                    <span id="modalTextHeader" class="caption-subject bold font-blue-hoki uppercase">  </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <div id="modalTextBody" class="col-md-12">
+                            </div>
+                            <div id="modalTextAreaContainer" class="form-group col-md-12">
+                                <textarea id="modalTextArea" name="modalTextArea" class="form-control"></textarea>
+                            </div>    
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="btnFrmAutUsrCancel" data-dismiss="modal" class="btn blue-madison">Tamam</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pageScript
+{
+<script src="~/Theme/Metronic/assets/global/plugins/codemirror/lib/codemirror.js"></script>
+<script src="~/Theme/Metronic/assets/global/plugins/codemirror/mode/sql/sql.js"></script>
+
+<script src="~/Areas/Base/Scripts/Sys/Monitoring/FrmMonDtbTxnEvt.js"></script>
+<script src="~/Areas/Base/Scripts/Sys/Monitoring/FrmMonDtbTxnEvt.FormMethods.js"></script>
+}
+
+

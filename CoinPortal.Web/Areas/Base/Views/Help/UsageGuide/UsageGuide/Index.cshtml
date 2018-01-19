@@ -1,0 +1,306 @@
+﻿@using Devia.Sigma.Business.Auth
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+<link href="~/Library/ratestar/star-rating.min.css" rel="stylesheet" />
+<link href="~/Theme/Metronic/assets/pages/css/blog.min.css" rel="stylesheet" type="text/css" />
+<style>
+    .tiles .tile {
+        cursor: default !important;
+    }
+
+        .tiles .tile h4 {
+            font-weight: 500 !important;
+        }
+
+        .tiles .tile:hover {
+            border-color: transparent !important;
+        }
+
+    
+
+    #scrItmTreeView {
+        margin-left: -21px;
+        margin-right: -21px;
+        margin-bottom: -36px;
+        /*margin-top:-19px;*/
+    }
+
+    .bootstrap-switch-label {
+        background-color: transparent !important;
+    }
+
+    #scrItmTreeView ul li span.badge, #scrItmTreeViewSubjects ul li span.badge {
+        background-color: transparent !important;
+        padding-top: 0px !important;
+        margin-right: -8px !important;
+    }
+
+    .blog-content-2 .blog-single-content {
+    padding: 20px 0px 0px !important;
+    }
+
+</style>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+         
+            <div class="col-md-4">
+                <div id="portletSubjects" class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-tags font-blue-hoki"></i>
+                            <span class="caption-subject bold font-blue-hoki uppercase"> Konular </span>
+                        </div>
+                        <div class="actions" >
+                            <a id="btnAddSubject" href="javascript:;" class="btn blue-hoki btn-outline"  style="display:none">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                            <a class="btn blue-hoki btn-outline myCollapse" href="javascript:;" data-original-title="" title="" ><i class="fa fa-chevron-down"></i> </a>
+                            <div class="portlet-input input-inline input-small">
+                                <div class="input-icon right">
+                                    <i class="icon-magnifier"></i>
+                                    <input id="txtSearchSubjects" type="text" class="form-control input-sm" placeholder="Ara...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                            <div id="scrItmTreeViewSubjects"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="portletBlogs" class="portlet light bordered">
+                    <div class="portlet-title" style="display:none">
+                        <div class="caption">
+                            <i class="font-blue-hoki"></i>
+                            <span class="caption-subject bold font-blue-hoki uppercase">  </span>
+                        </div>
+                        <div class="actions" >
+
+                            <a id="btnDelSubject" href="javascript:;" class="btn blue-hoki btn-outline">
+                                <i class="fa fa-times"></i>
+                            </a>
+                            <a id="btnUpdSubject" href="javascript:;" class="btn blue-hoki btn-outline">
+                                <i class="fa fa-refresh"></i>
+                            </a>
+                            <div class="portlet-input input-inline input-xlarge">
+                                <div class="input-icon right">
+                                    <i class="icon-magnifier"></i>
+                                    <input id="txtSearchBlogs" type="text" class="form-control input-sm" placeholder="Ara...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body" >
+                        <div class="blog-page blog-content-2">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="pull-right">
+                                        <input id="input-4" name="input-4" class="rating rating-loading " data-show-clear="false">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="subjectContent">
+                                        <div class="well"><p> Sol tarafta bulunan menüye tıklayarak sistemin çalışma şekli hakkında bilgi alabilirsiniz.</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+<div id="modalFormFrmUsgSbj" class="modal fade bs-modal-lg in" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+
+        <div class="portlet light" id="portletSubject">
+            <div class="portlet-title tabbable-line">
+                <div class="caption">
+                    <span class="caption-subject bold font-blue-hoki " id="header"> <i class="fa fa-user-plus"> </i> KONU </span>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab_1" data-toggle="tab"> DETAY </a>
+                    </li>
+                    <li>
+                        <a href="#tab_2" data-toggle="tab"> İÇERİK  </a>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="portlet-body form ">
+                <form role="form" id="frmFrmUsgSbj" class="form-horizontal form-bordered">
+                    <div class="form-body" style="padding-bottom: 0px;">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+
+                                @SgHtml.TextBox("Guid", "", "display-hide")
+                                @SgHtml.TextBox("Status", "", "display-hide")
+                                @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                @SgHtml.TextBox("SubjectId", "", "display-hide")
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Menü Tip</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select class="form-control select2" id="NodeType" name="NodeType" data-placeholder="Menü Tipi" required>
+                                                <option value="N">Yaprak</option>
+                                                <option value="L">Düğüm</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Menü</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select class="form-control select2" id="ParentId" name="ParentId" data-placeholder="Menü" tabindex="-1" aria-hidden="true"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Konu Adı</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="SubjectName" name="SubjectName" placeholder="Konu Adı" maxlength="64">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">İkon</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select class="form-control input-block-level select2 FontawesomeCombo" id="" name="SubjectIconContent" data-placeholder="İkon">
+                                                @Html.Partial("../SharedPartials/FontawesomeIconOptionList")
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Yorum Eklenebilir</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input id="IsCommentable" name="IsCommentable" type="checkbox"><span></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Puanlanabilir</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input id="IsRateble" name="IsRateble" type="checkbox"><span></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group  last">
+                                    <label class="control-label col-md-3">Etiketler</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="SubjectTags" name="SubjectTags" placeholder="Etiketler" maxlength="128">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group display-hide">
+                                    <label class="control-label col-md-3">CommentCount</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="CommentCount" name="CommentCount" placeholder="CommentCount" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group display-hide">
+                                    <label class="control-label col-md-3">AvgRate</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="AvgRate" name="AvgRate" placeholder="AvgRate" maxlength="4" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                              
+                                <div class="form-group display-hide">
+                                    <label class="control-label col-md-3">Öncelik</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="Priority" name="Priority" placeholder="Öncelik" maxlength="2" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group display-hide">
+                                    <label class="control-label col-md-3">Kayıt Tarihi</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="InsertDatetime" name="InsertDatetime" placeholder="Kayıt Tarihi" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group display-hide">
+                                    <label class="control-label col-md-3">Kaydeden Kullanıcı</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="InsertUser" name="InsertUser" placeholder="Kaydeden Kullanıcı" maxlength="30">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane" id="tab_2">
+                                <div class="col-md-12">
+                                    <div id="SubjectText" name="SubjectText" style="display: none;"> </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-actions" style="margin-top:10px;">
+                            <div style="text-align:right;">
+                                <button id="btnFrmUsgSbjCancel" type="button" data-dismiss="modal" class="btn btn-default">İptal</button>
+                                <button id="btnFrmUsgSbjSave" type="button" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</button>
+                                <button id="btnFrmUsgSbjUpdate" type="button" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+     
+
+    </div>
+
+
+@section pageScript
+{
+    <script>
+        var isAuthorized = @Html.Raw(SgAuthManager.IsCustomAuthorized("IsUsageGuideAdmin").ToString().ToLower());
+    </script>
+    <script src="~/Scripts/bootstrap-treeview.js"></script>
+    <script src="~/Areas/Base/Scripts/Help/UsageGuide/UsageGuide.js"></script>
+    <script src="~/Library/ratestar/star-rating.min.js"></script>
+    <script src="~/Library/ratestar/star-rating_locale_tr.js"></script>
+    <script src="~/Library/TextMarker/mark.js"></script>
+}

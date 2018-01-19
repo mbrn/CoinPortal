@@ -1,0 +1,128 @@
+﻿@using Devia.Sigma.Business.Auth.Entity
+@using Devia.Sigma.Business.Auth.Session
+@using Devia.Sigma.Business.Auth.Tenancy
+@using Devia.Sigma.Business.Auth
+@using Devia.Sigma.Business.Commerce.Product
+@using Devia.Sigma.Db.Transaction
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section pageHeader
+{
+    <style>
+        .pricing-content-2 .pricing-table-container .price-column-container>.price-table-pricing>h3>.price-sign {
+            top: 15px;
+        }
+
+        .pricing-content-2 .pricing-table-container {
+             padding-top: 0px !important; 
+             padding-bottom: 0px !important; 
+        }
+    </style>
+    <link href="~/Theme/Metronic/assets/pages/css/pricing.min.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="portlet light portlet-fit bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-share font-blue"></i>
+            <span class="caption-subject font-blue bold uppercase">PAKETLER</span>
+        </div>
+        <div class="actions">
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="pricing-content-2">
+            <div class="pricing-table-container">
+                <div class="row">
+                    @{                        
+                        var pckLst = FrmTntTypPck.SelectAll(a => a.IsActive && a.TypCode == SgSession.Current.Tenant.TntType && a.IsActive).OrderBy(a => a.OrderNo).ToList();
+                        var cntLst = FrmTntTypCnt.SelectAll();
+                        var pckCntLst = FrmTntTypPckCnt.SelectAll(a => a.IsVisible && a.TypCode == SgSession.Current.Tenant.TntType);
+
+                        var pckCount = pckLst.Count;
+
+                        var isFirst = true;
+
+                        foreach (var pck in pckLst)
+                        {
+                            var product = SgProduct.Get(pck.PrdId);
+                            if (product.Prd.IsActive == false)
+                            {
+                                pckCount--;
+                                continue;
+                            }
+
+                            var pckCntValLst = FrmTntTypPckCntVal.SelectAll(a => a.PckId == pck.PckId);
+
+                            var priceCnt = pckCntLst.Find(a => a.CntCode == SgTenant.ValueKeys.PRICE);
+                            var priceVal = pckCntValLst.Find(a => a.PckCntId == priceCnt.PckCntId);
+
+                            var offset = (isFirst ? @Math.Truncate((decimal)(12 % pckCount / 2)) : 0);
+                            <div class="col-md-@(Math.Truncate((decimal)(12 / pckCount))) col-md-offset-@offset">
+                                @{isFirst = false;}
+
+                                @{var classes = (pck.IsHighlight ? "featured-price" : "border-left border-top border-right");}
+                                <div class="price-column-container @classes">
+                                    @if (pck.IsHighlight)
+                                    {
+                                        <div class="price-feature-label uppercase bg-red">EN UYGUN</div>
+                                    }
+                                    <div class="price-table-head price-1">
+                                        <h2 class="uppercase opt-pricing-5 @pck.HeaderHtmlClass">@pck.PckName</h2>
+                                    </div>
+                                    <div class="price-table-pricing">
+                                        <h3>
+                                            <sup class="price-sign">&#x20BA;</sup> @priceVal.CntViewVal
+                                        </h3>
+                                        <p class="uppercase">aylık</p>
+                                    </div>
+                                    <div class="price-table-content">
+                                        @foreach (var pckCnt in pckCntLst)
+                            {
+                                if (pckCnt.CntCode == SgTenant.ValueKeys.PRICE)
+                                {
+                                    continue;
+                                }
+
+                                var cnt = cntLst.Find(a => a.CntCode == pckCnt.CntCode);
+                                var cntVal = pckCntValLst.Find(a => a.PckCntId == pckCnt.PckCntId);
+
+                                            <div class="row no-margin">
+                                                <div class="col-xs-3 text-right">
+                                                    <i class="@cnt.CntIcon"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-left">@cntVal.CntViewVal</div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="price-table-footer">
+                                        @if (pck.IsHighlight)
+                                        {
+                                            <button type="button" class="btnAddBasket btn btn-lg green uppercase" pck-id="@pck.PckId">Satın Al</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btnAddBasket btn blue btn-outline sbold uppercase" pck-id="@pck.PckId">Satın Al</button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section pageScript
+{
+    <script src="~/Areas/Base/Scripts/Auth/Tenancy/TenancySale.js"></script>
+}
+
+

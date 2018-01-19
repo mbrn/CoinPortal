@@ -1,0 +1,512 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!--
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 4.5.4
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    @SgHelpers.TitleLogin()
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href='@(Request.IsSecureConnection ? "https" : "http")://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all' rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="~/Theme/Metronic/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="~/Theme/Metronic/assets/global/css/components-rounded.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="~/Theme/Metronic/assets/pages/css/login.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <!-- END THEME LAYOUT STYLES -->
+    @SgHelpers.FavIcon();
+
+    @if (ViewBag.ShowCaptcha ?? false)
+    {
+        <script src='https://www.google.com/recaptcha/api.js'></script> 
+    }
+</head>
+<!-- END HEAD -->
+<body class=" login">
+    <!-- BEGIN LOGO -->
+    <div class="logo">
+        @SgHelpers.LogoLogin()        
+    </div>
+    <!-- END LOGO -->
+    <!-- BEGIN LOGIN -->
+    <div class="content">
+        <!-- BEGIN LOGIN FORM -->
+        <form class="login-form" action="../../Base/Login/Validation" method="post">
+            <h3 class="form-title font-green">Giriş</h3>
+            <div class="alert alert-danger validation-alert display-hide">
+                <a class="close" data-close="alert"></a>
+                <span>
+                    Lütfen kullanıcı adı ve şifre giriniz
+                </span>
+            </div>
+            @{
+                if (ViewBag.LoginError != null && ViewBag.LoginError == true)
+                {
+                    <div class="alert alert-danger display">
+                        <a class="close" data-close="alert"></a>
+                        <span>
+                            Girdiğiniz kullanıcı adı veya şifre hatalı
+                        </span>
+                    </div>
+                }
+            }
+            <div class="form-group">
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                <label class="control-label visible-ie8 visible-ie9">Kullanıcı Adı</label>
+                <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Kullanıcı Adı" name="username"
+                       style="-webkit-box-shadow: 0 0 0px 1000px #dde3ec inset !important;" />
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">Şifre</label>
+                <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Şifre" name="password"
+                       style="-webkit-box-shadow: 0 0 0px 1000px #dde3ec inset !important;" />
+            </div>
+
+            @if (ViewBag.ShowCaptcha ?? false)
+            {
+                <input type="hidden" class="hiddenRecaptcha required" name="hiddenRecaptcha" id="hiddenRecaptcha">
+                <div class="form-group">
+                    <div class="g-recaptcha" style="margin: 0 auto;display: table" data-sitekey=@ViewBag.CaptchaKey></div>
+                </div>
+            }
+            <div class="form-actions">
+                <button type="submit" class="btn green">Giriş</button>
+                <label class="rememberme check mt-checkbox mt-checkbox-outline">
+                    <input type="checkbox" checked id="remember" name="remember">Beni Hatırla
+                    <span></span>
+                </label>
+                <a href="javascript:;" id="forget-password" class="forget-password">Şifremi Unuttum</a>
+            </div>
+        </form>
+
+        <!-- END LOGIN FORM -->
+        <!-- BEGIN FORGOT PASSWORD FORM -->
+        <form class="forget-form">
+            <h3 class="font-green">Şifremi Unuttum</h3>
+            <p>
+                Şifre yenileme mailini almak için lütfen mail adresinizi giriniz.
+            </p>
+            <div class="alert alert-danger display-hide">
+                <a class="close" data-close="alert"></a>
+                <span>
+                    Lütfen mail adresinizi giriniz
+                </span>
+            </div>
+            <div class="alert alert-warning display-hide">
+                <a class="close" data-close="alert"></a>
+                <span>
+                    Mail adresine kayıtlı bir kullanıcı bulunamamıştır. Lütfen mail adresinizi kontrol ediniz.
+                </span>
+            </div>
+            <div class="alert alert-success display-hide">
+                <a class="close" data-close="alert"></a>
+                <span>
+                    Şifre yenileme linki mail adresinize gönderilmiştir.
+                </span>
+            </div>
+            <div class="form-group">
+                <input id="txtForgetMail" class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" />
+            </div>
+            <div class="form-actions">
+                <a id ="back-btn" class="btn green btn-outline"> Geri</a>
+                <a id="btnForgetPassword" class="btn btn-success pull-right">Gönder</a>
+            </div>
+        </form>
+
+        <!-- END FORGOT PASSWORD FORM -->
+    </div>
+    <div class="copyright"> 2015 © <a href="http://www.deviatech.com.tr" target="_blank">DeviaTech</a> </div>
+    <!--[if lt IE 9]>
+    <script src="../assets/global/plugins/respond.min.js"></script>
+    <script src="../assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="~/Theme/Metronic/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    @*<script src="~/Theme/Metronic/assets/pages/scripts/login.min.js" type="text/javascript"></script>*@
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <!-- END THEME LAYOUT SCRIPTS -->
+
+    <script src="~/Theme/Sigma/scripts/Devia.Sigma.Util.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+
+            $('.forget-form').validate({
+                rules: {
+                    txtForgetMail: { required: true, email: true },
+                },
+            });
+
+        $('#btnForgetPassword').click(function () {
+            var email = $('#txtForgetMail').val();
+            if ($('.forget-form').valid() == false) {
+                $('.alert-danger', $('.forget-form')).show();
+                return;
+            }
+
+            $('.alert-danger', $('.forget-form')).hide();
+            $('.alert-warning', $('.forget-form')).hide();
+            $('.alert-success', $('.forget-form')).hide();
+
+            $('#btnForgetPassword').attr('disabled', 'disabled');
+            var oldHtml = $('#btnForgetPassword').html();
+            $('#btnForgetPassword').html("<i class='fa fa-lg fa fa-circle-o-notch fa-spin'></i>");
+
+            Sigma.ajax({
+                url: "../../Base/Login/SendPasswordResetLink",
+                data: { email: email },
+                blockUI: false,
+                onSuccess: function (data) {
+                    if (data == "true" || data == "True") {
+                        $('.alert-success', $('.forget-form')).show();
+                    }
+                    else {
+                        $('.alert-warning', $('.forget-form')).show();
+                    }
+                },
+                onComplete: function(){
+                    $('#btnForgetPassword').removeAttr('disabled');
+                    $('#btnForgetPassword').html(oldHtml);
+                },
+                showSuccessToast: false,
+                showErrorToast: false,
+            });
+
+            return true;
+        });
+    });
+    </script>
+
+    <script>
+        var Login = function () {
+
+            var handleLogin = function () {
+
+                $('.login-form').validate({
+                    ignore: [],
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+                        username: {
+                            required: true
+                        },
+                        password: {
+                            required: true
+                        },
+                        remember: {
+                            required: false
+                        },
+                        hiddenRecaptcha: {
+                            required: function () {
+                                if (grecaptcha.getResponse() == '') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        }
+                    },
+
+                    messages: {
+                        username: {
+                            required: "Lütfen kullanıcı adı giriniz"
+                        },
+                        password: {
+                            required: "Lütfen şifre giriniz"
+                        },
+                        hiddenRecaptcha: {
+                            required: 'Lütfen doğrulama kodunu giriniz'
+                        }
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit   
+                        $('.alert-danger.validation-alert span', $('.login-form')).text(validator.errorList[0].message);
+                        $('.alert-danger.validation-alert', $('.login-form')).show();
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    success: function (label) {
+                        label.closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+
+                    errorPlacement: function (error, element) {
+                        error.insertAfter(element.closest('.input-icon'));
+                    },
+
+                    submitHandler: function (form) {
+                        form.submit(); // form validation success, call ajax form submit
+                    }
+                });
+
+                $('.login-form input').keypress(function (e) {
+                    if (e.which == 13) {
+                        if ($('.login-form').validate().form()) {
+                            $('.login-form').submit(); //form validation success, call ajax form submit
+                        }
+                        return false;
+                    }
+                });
+            }
+
+            var handleForgetPassword = function () {
+                $('.forget-form').validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "",
+                    rules: {
+                        email: {
+                            required: true,
+                            email: true
+                        }
+                    },
+
+                    messages: {
+                        email: {
+                            required: "Email is required."
+                        }
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit   
+
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    success: function (label) {
+                        label.closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+
+                    errorPlacement: function (error, element) {
+                        error.insertAfter(element.closest('.input-icon'));
+                    },
+
+                    submitHandler: function (form) {
+                        form.submit();
+                    }
+                });
+
+                $('.forget-form input').keypress(function (e) {
+                    if (e.which == 13) {
+                        if ($('.forget-form').validate().form()) {
+                            $('.forget-form').submit();
+                        }
+                        return false;
+                    }
+                });
+
+                jQuery('#forget-password').click(function () {
+                    jQuery('.login-form').hide();
+                    jQuery('.forget-form').show();
+                });
+
+                jQuery('#back-btn').click(function () {
+                    jQuery('.login-form').show();
+                    jQuery('.forget-form').hide();
+                });
+
+            }
+
+            var handleRegister = function () {
+
+                function format(state) {
+                    if (!state.id) { return state.text; }
+                    var $state = $(
+                     '<span><img src="../assets/global/img/flags/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+                    );
+
+                    return $state;
+                }
+
+                if (jQuery().select2 && $('#country_list').size() > 0) {
+                    $("#country_list").select2({
+                        placeholder: '<i class="fa fa-map-marker"></i>&nbsp;Select a Country',
+                        templateResult: format,
+                        templateSelection: format,
+                        width: 'auto',
+                        escapeMarkup: function (m) {
+                            return m;
+                        }
+                    });
+
+
+                    $('#country_list').change(function () {
+                        $('.register-form').validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+                    });
+                }
+
+                $('.register-form').validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "",
+                    rules: {
+
+                        fullname: {
+                            required: true
+                        },
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        address: {
+                            required: true
+                        },
+                        city: {
+                            required: true
+                        },
+                        country: {
+                            required: true
+                        },
+
+                        username: {
+                            required: true
+                        },
+                        password: {
+                            required: true
+                        },
+                        rpassword: {
+                            equalTo: "#register_password"
+                        },
+
+                        tnc: {
+                            required: true
+                        }
+                    },
+
+                    messages: { // custom messages for radio buttons and checkboxes
+                        tnc: {
+                            required: "Please accept TNC first."
+                        }
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit   
+
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    success: function (label) {
+                        label.closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+
+                    errorPlacement: function (error, element) {
+                        if (element.attr("name") == "tnc") { // insert checkbox errors after the container                  
+                            error.insertAfter($('#register_tnc_error'));
+                        } else if (element.closest('.input-icon').size() === 1) {
+                            error.insertAfter(element.closest('.input-icon'));
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+
+                    submitHandler: function (form) {
+                        form.submit();
+                    }
+                });
+
+                $('.register-form input').keypress(function (e) {
+                    if (e.which == 13) {
+                        if ($('.register-form').validate().form()) {
+                            $('.register-form').submit();
+                        }
+                        return false;
+                    }
+                });
+
+                jQuery('#register-btn').click(function () {
+                    jQuery('.login-form').hide();
+                    jQuery('.register-form').show();
+                });
+
+                jQuery('#register-back-btn').click(function () {
+                    jQuery('.login-form').show();
+                    jQuery('.register-form').hide();
+                });
+            }
+
+            return {
+                //main function to initiate the module
+                init: function () {
+
+                    handleLogin();
+                    handleForgetPassword();
+                    handleRegister();
+
+                }
+
+            };
+
+        }();
+
+        jQuery(document).ready(function () {
+            Login.init();
+        });
+    </script>
+
+</body>
+</html>

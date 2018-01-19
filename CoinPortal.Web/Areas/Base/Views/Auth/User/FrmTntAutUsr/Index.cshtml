@@ -1,0 +1,255 @@
+﻿@model List<Devia.Sigma.Business.Auth.Interface.ISgAuthRole>
+
+@using Devia.Sigma.Business.Auth.Entity
+@using Devia.Sigma.Business.Auth.Session
+@using Devia.Sigma.Business.Sys.Provider.Entity
+@using Devia.Sigma.Business.Sys.Provider
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section pageHeader
+{
+    <style>
+        table.dataTable tbody td {
+            vertical-align: middle;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    @if (SgSession.Current.Tenant.Opt.AddUser)
+                    {
+                        <a id="btnFrmTntAutUsrAdd" class="btn green"><i class="fa fa-user-plus" aria-hidden="true"></i> Yeni Kullanıcı Ekle</a>
+                    }
+                    @if (SgSession.Current.Tenant.Opt.InviteUser)
+                    {
+                        <a id="btnFrmTntAutUsrInviteModal" class="btn green"><i class="fa fa-user-plus" aria-hidden="true"></i> Yeni Kullanıcı Davet Et</a>
+                    }
+                </div>
+                <div class="tools">
+                    <select id="cmbIsActive" class="bs-select form-control input-small" data-size="8" data-style="grey-steel">
+                        <option value="-1" selected>Tüm Kullanıcılar</option>
+                        <option value="1">Sadece Aktifler</option>
+                        <option value="0">Sadece Pasifler</option>
+                    </select>
+                </div>
+                <div class="actions">
+                    
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table id="tblFrmTntAutUsr" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmTntAutUsr_info"></table>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+<div id="modalFormFrmTntAutUsr" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="portlet light">
+            <div class="portlet-title tabbable-line">
+                <div class="caption">
+                    <span class="caption-subject bold font-blue-hoki " id="header"> <i class="fa fa-user-plus"> </i> KULLANICI EKLE </span>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab_user_info" data-toggle="tab"> KULLANICI BİLGİLERİ </a>
+                    </li>
+                    <li>
+                        <a href="#tab_user_perms" data-toggle="tab"> YETKİLER  </a>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="portlet-body form " data-mobile="IOS">
+                <form role="form" id="frmFrmTntAutUsr" class="form-horizontal form-bordered">
+                    <div class="form-body" style="padding-bottom: 0px;">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_user_info">
+                                @SgHtml.TextBox("Guid", "", "display-hide")
+                                @SgHtml.TextBox("Status", "", "display-hide")
+                                @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                @SgHtml.TextBox("UsrId", "", "display-hide")
+                                @SgHtml.TextBox("Password", "", "display-hide")
+                                @SgHtml.TextBox("CookieGuid", "", "display-hide")
+                                @SgHtml.TextBox("VerificationCode", "", "display-hide")
+                                @SgHtml.TextBox("StartUrl", "", "display-hide")
+                                @SgHtml.TextBox("ImgPath", "", "display-hide")
+                                @SgHtml.TextBox("DisplayName", "", "display-hide")
+                                @SgHtml.TextBox("Username", "", "display-hide")
+                                @SgHtml.TextBox("IsApproved", "", "display-hide")
+                                @SgHtml.TextBox("ImgId", "", "display-hide")
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Görsel</label>
+                                    <div class="col-md-9">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div id="imgPreviewDiv" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 120px; height: 90px;">
+                                            </div>
+                                            <div class="pull-right" style="margin-left:10px;">
+                                                <span class="btn default btn-file">
+                                                    <span class="fileinput-new"> Resim Seç </span>
+                                                    <span class="fileinput-exists"> Değiştir </span>
+                                                    <input type="file">
+                                                </span>
+                                                <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Sil </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Adı Soyadı</label>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control" id="Name" name="Name" placeholder="Adı" maxlength="40">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control" id="Surname" name="Surname" placeholder="Soyadı" maxlength="40">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Mail Adresi</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="Mail" name="Mail" placeholder="Mail Adresi" maxlength="50">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Gsm No</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="CellPhone" name="CellPhone" placeholder="Gsm No" maxlength="15">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Aktiflik</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="checkbox" class="make-switch" id="IsActive" name="IsActive" data-on-text="<span class='fa fa-check'></span>" data-off-text="<span class='fa fa-times'></span>">
+                                        </div>
+                                    </div>
+                                </div>
+                                @{
+                                    var autTypes = FrmPrv.SelectAll(u => u.PrvType == SgProviderManager.ProviderType.Auth);
+                                    if (autTypes.Count > 1)
+                                    {
+                                        <div class="form-group last">
+                                            <label class="control-label col-md-3">Otorizasyon Tipi</label>
+                                            <div class="col-md-9">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <select id="AutType" name="AutType" class="form-control" data-placeholder="Otorizasyon Tipi" tabindex="-1" aria-hidden="true">
+                                                        @{
+                                                            foreach (var item in autTypes)
+                                                            {
+                                                                <option value="@item.PrvKey">@item.PrvName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="tab-pane" id="tab_user_perms">
+                                <div class="form-group" id="roles">
+                                    @foreach (var role in Model)
+                                    {
+                                        <div class="list-group-item clearfix role-box" role-id="@role.RoleId">
+                                            <div class="row">
+                                                <div class="caption col-md-10">
+                                                    <span class="caption-subject bold font-blue-hoki role-name"> @role.RoleName  </span>
+                                                    <h6 class="font-gray role-dscr" style="margin-top:0px;margin-bottom:0px;"> @role.Dscr </h6>
+                                                </div>
+                                                <span class="col-md-2 normal-buttons text-center">
+                                                    <input type="checkbox" class="make-switch" data-size="mini" data-on-text="<span class='fa fa-check'></span>" data-off-text="<span class='fa fa-times'></span>">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-actions" style="margin-top:10px;">
+                            <div style="text-align:right;">
+                                <button id="btnFrmTntAutUsrCancel" type="button" data-dismiss="modal" class="btn default">İptal</button>
+                                <button id="btnFrmTntAutUsrSave" type="button" class="btn green">@Html.Sigma().Icon("f0c7") Kaydet</button>
+                                <button id="btnFrmTntAutUsrUpdate" type="button" class="btn green">@Html.Sigma().Icon("f021") Güncelle</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalFormFrmTntAutUsrInvite" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Kullanıcı Davet Etme</h4>
+            </div>
+            <div class="modal-body form">
+                <form class="form-horizontal form-bordered" id="frmFrmTntAutUsrInvite">
+                    <div class="form-body">                        
+                        <div class="form-group last">
+                            <label class="control-label col-md-3">Mail Adresi</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" id="Mail" name="Mail" placeholder="Mail Adresi" maxlength="50">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btnFrmTntAutUsrInvite" type="button" class="btn green">Davet Et</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section pageScript
+{
+    <script src="~/Areas/Base/Scripts/Auth/User/FrmTntAutUsr.js"></script>
+}
+
+
+
+

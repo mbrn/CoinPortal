@@ -1,0 +1,177 @@
+﻿@using Devia.Sigma.Business.Language.Entity
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+
+    var lngList = FrmLng.SelectAll().OrderBy(a => a.LngKey);
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmLngTxtRetrieve" class="btn green">@Html.Sigma().Icon("f002") Getir</a>
+                    <a id="btnFrmLngTxtSave" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</a>
+                    <a id="btnFrmLngTxtUpdate" class="btn blue-madison disabled">@Html.Sigma().Icon("f021") Güncelle</a>
+                    <a id="btnFrmLngTxtDelete" class="btn red-sunglo disabled">@Html.Sigma().Icon("f00d") Sil</a>
+                    <a id="btnFrmLngTxtClear" class="btn btn-default">@Html.Sigma().Icon("f1f8") Temizle</a>
+                </div>
+                <div class="actions">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Hızlı Giriş
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a class="btn-quick-entry empty-trns" data-lng-key="*"><b>Tüm diller</b> - sadece boş çeviri içerenler için </a>
+                            </li>
+                            <li>
+                                <a class="btn-quick-entry" data-lng-key="*"><b>Tüm diller</b> - tüm çeviriler için </a>
+                            </li>
+                            @foreach (var lng in lngList)
+                            {
+                                <li class="divider"> </li>
+                                <li><a class="btn-quick-entry empty-trns" data-lng-key="@lng.LngKey"><b>@lng.LngName</b> - sadece boş çeviriler için </a> </li>
+                                <li><a class="btn-quick-entry" data-lng-key="@lng.LngKey"><b>@lng.LngName</b> - tüm çeviriler için </a> </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="frmFrmLngTxt">
+                    <div class="form-body">
+                        <div class="form-group col-md-6 display-hide">
+                            <label class="control-label">Guid</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="Guid" name="Guid" placeholder="Guid" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 display-hide">
+                            <label class="control-label">Status</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="checkbox" class="form-control" id="Status" name="Status" placeholder="Status" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 display-hide">
+                            <label class="control-label">Lastupdated</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="Lastupdated" name="Lastupdated" placeholder="Lastupdated" maxlength="16" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 display-hide ">
+                            <label class="control-label">TxtId</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="TxtId" name="TxtId" placeholder="TxtId" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' disabled>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            <label class="control-label">Text Key</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="TxtKey" name="TxtKey" placeholder="TxtKey" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1 ">
+                            <label class="control-label">Dinamik</label>
+                            <div class="input-icon right">
+                                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input id="IsDynamic" name="IsDynamic" type="checkbox"><span></span></label>
+                            </div>                            
+                        </div>
+                        <div class="form-group col-md-1 ">
+                            <label class="control-label">JavaScript</label>
+                            <div class="input-icon right">
+                                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input id="IsJsText" name="IsJsText" type="checkbox"><span></span></label>
+                            </div>
+                        </div>
+
+                        @foreach (var lng in FrmLng.SelectAll().OrderBy(a => a.LngKey))
+                        {
+                            <div class="form-group col-md-3 ">
+                                <label class="control-label">@lng.LngName</label>
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" id="trn@lng.LngKey" name="trn@lng.LngKey" placeholder="@lng.LngName" language="@lng.LngKey">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </form>
+
+                <div class="clearfix"></div>
+                <!-- Grid -->
+                <table id="tblFrmLngTxt" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmLngTxt_info"></table>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+<div id="modalQuickEntry" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true"></a>
+                <h4 class="modal-title">FrmLng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="note note-success">
+                    <ul>
+                        <li><b>Ctrl + Enter</b> tuşunu kullanarak çeviriyi kaydedip bir sonraki çeviriye geçebilirsiniz.</li>
+                        <li><b>Ctrl + <i class="fa fa-arrow-right" aria-hidden="true"></i></b> tuşunu kullanarak çeviriyi keydetmeden bir sonraki çeviriye geçebilirsiniz.</li>
+                        <li><b>Ctrl + <i class="fa fa-arrow-left" aria-hidden="true"></i></b> tuşunu kullanarak çeviriyi keydetmeden bir önceki çeviriye geçebilirsiniz.</li>
+                        <li>Toplam <b class="counter"></b> adet çeviri</li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <form role="form" id="frmQuickEntry">
+                        <div class="form-body">
+                            <div class="form-group col-md-12 ">
+                                <label class="control-label">Txt Key</label>
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" id="TxtKey" name="TxtKey" placeholder="Txt Key" readonly>
+                                </div>
+                            </div>
+                            @foreach (var lng in lngList)
+                            {
+                                <div class="form-group col-md-12 ">
+                                    <label class="control-label">@lng.LngName</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control lng-text" data-lng-key="@lng.LngKey" placeholder="@lng.LngName" maxlength="100">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a data-dismiss="modal" class="btn btn-default">Tamam</a>
+                @*<a id="" class="btn green"><i class="fa fa-save" aria-hidden="true"></i> Kaydet</a>
+                    <a id="" class="btn green"><i class="fa fa-arrow-right" aria-hidden="true"></i> Kaydet ve Devam Et</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pageScript
+{
+    <script>
+        var lngs = @Html.Raw("{" + String.Join(",", FrmLng.SelectAll().OrderBy(a => a.LngKey).Select(c => "\"" + c.LngKey + "\":\"" + c.LngName + "\"")) + "}");
+    </script>
+    <script src="~/Areas/Base/Scripts/Language/FrmLngTxt.js"></script>
+}
+
+

@@ -1,0 +1,126 @@
+﻿@using Devia.Sigma.Business.Parameter.Entity
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnAdd"class="btn green">@Html.Sigma().Icon("f067") Ekle</a>
+                </div>
+                <div class="actions"></div>
+            </div>
+            <div class="portlet-body">
+                <table id="tblFrmPrmCountry" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmPrmCountry_info"></table>
+                <div class="clearfix"></div>
+
+                <div id="modalForm" class="modal fade bs-modal-lg" tabindex="-1" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal" aria-hidden="true"></a>
+                                <h4 class="modal-title">Kıta Tanım</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                                        <div class="row">
+                                            <form role="form" id="frmFrmPrmCountry">
+                                                <div class="form-body">
+                                                    <div class="form-group col-md-6 display-hide">
+                                                        <label class="control-label">Guid</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="Guid" name="Guid" placeholder="Guid" maxlength="50">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 display-hide">
+                                                        <label class="control-label">Status</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="checkbox" class="form-control" id="Status" name="Status" placeholder="Status" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 display-hide">
+                                                        <label class="control-label">Lastupdated</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="Lastupdated" name="Lastupdated" placeholder="Lastupdated" maxlength="16" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">Ülke Kodu</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="CountryCode" name="CountryCode" placeholder="CountryCode" maxlength="2">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">Ülke Adı</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="CountryName" name="CountryName" placeholder="CountryName" maxlength="100">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">Kıta</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            @(Html.Sigma().ComboBox<FrmPrmContinent>("ContinentId", "ContinentId", "ContinentName", "form-control"))
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">Bölge</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="Region" name="Region" placeholder="Region" maxlength="30">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 ">
+                                                        <label class="control-label">Yerel Ad</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="LocalName" name="LocalName" placeholder="LocalName" maxlength="50">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 display-hide">
+                                                        <label class="control-label">CountryCode3</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="CountryCode3" name="CountryCode3" placeholder="CountryCode3" maxlength="3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a id="btnCancel"data-dismiss="modal" class="btn btn-default">İptal</a>
+                                <a id="btnSave"class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</a>
+                                <a id="btnUpdate"class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+@section pageScript
+{
+    <script>
+        var prmContinentLookup = JSON.parse('@Html.Raw(FrmPrmContinent.SelectAll().ToDictionary(a => a.ContinentId, a => a.ContinentName).SgSerializeToJson())');
+    </script>
+    <script src="~/Areas/Base/Scripts/Parameter/FrmPrmCountry.js"></script>
+}

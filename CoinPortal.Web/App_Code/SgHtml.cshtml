@@ -1,0 +1,172 @@
+﻿@helper TextBox(String id, String label, String divClass = "", String placeHolder = "", Int64 maxLength = 0, String dataType = "text", String attribute = "", String value = "", String inputClass = "")
+{
+//text
+//numeric
+//mail
+//phonhe
+
+    <div class="form-group @divClass">
+        <label class="control-label">@label</label>
+        <div class="input-icon right">
+            <i class="fa"></i>
+            @switch (dataType)
+            {
+                case "text":  <input type="text" class="form-control @inputClass" id="@id" name="@id" placeholder="@placeHolder" @attribute   @(new HtmlString(maxLength > 0 ? "maxlength='" + maxLength + "'" : "")) value="@value"> break;
+                case "numeric":  <input type="text" class="form-control @inputClass" id="@id" name="@id" placeholder="@placeHolder" @attribute @(new HtmlString(maxLength > 0 ? "maxlength='" + maxLength + "'" : "")) value="@value" onkeypress='return event.charCode >= 48 && event.charCode <= 57'> break;
+                default:
+                    break;
+            }
+            
+        </div>
+    </div>
+}
+
+@helper RichTextBox(String id, String label, String divClass = "", String placeHolder = "", Int64 maxLength = 0, Int64 rows = 2, String dataType = "text", String attribute = "", String textareaClass = "")
+{
+    <div class="form-group @divClass">
+        <label class="control-label">@label</label>
+        <div class="input-icon right">
+            <i class="fa"></i>
+            <textarea type="text" class="form-control @textareaClass" id="@id" name="@id" placeholder="@placeHolder" rows=@rows @attribute @(new HtmlString(maxLength > 0 ? "maxlength='" + maxLength + "'" : ""))></textarea>
+        </div>
+    </div>
+}
+
+@helper DateTime(String id, String label, String divClass = "", String placeHolder = "")
+{
+    <div class="form-group @divClass">
+        <label class="control-label">@label</label>
+        <div class="input-group date datetime-picker bs-datetime">
+            <input id="@id" name="@id" type="text" size="16" class="form-control bg-white" placeholder="@placeHolder" readonly>
+            <span class="input-group-addon">
+                <button class="btn default date-set" type="button">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+}
+
+@helper Date(String id, String label, String divClass = "", String placeHolder = "")
+{
+    <div class="form-group @divClass">
+        <label class="control-label">@label</label>
+        <div class="input-group date date-picker">
+            <input type="text" class="form-control bg-white" readonly  id="@id" name="@id"  placeholder="@placeHolder">
+            <span class="input-group-btn">
+                <button class="btn default" type="button">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+}
+
+@helper Time(String id, String label, String divClass = "", String placeHolder = "")
+{
+    <div class="form-group @divClass">
+        <label class="control-label">@label</label>
+        <div class="input-group">
+            <input id="@id" name="@id" type="text" class="form-control timepicker timepicker-default timepicker-24" placeholder="@placeHolder">
+            <span class="input-group-btn">
+                <button class="btn default" type="button">
+                    <i class="fa fa-clock-o"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+}
+
+@helper CheckBox(String id, String label, String divClass = "")
+{
+    <div class="form-group @divClass">
+        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+            @label
+            <input type="checkbox" class="form-control" id="@id" name="@id">
+            <span></span>
+        </label>
+    </div>
+
+    
+}
+
+@helper Switch(String id, String label, String divClass = "")
+{
+    <div class="form-group @divClass">
+        <label class="control-label">@label</label>
+        <div class="input-icon right">
+            <input type="checkbox" class="make-switch" id="@id" name="@id" data-on-text="<span class='fa fa-check'></span>" data-off-text="<span class='fa fa-times'></span>">
+        </div>
+    </div>
+}
+
+@helper FontawesomeCombo(String id, String label, String divClass = "")
+{
+    <div class="form-group @divClass">
+        <label class="control-label">@label</label>
+        <select class="form-control input-block-level select2 FontawesomeCombo" id="@id" name="@id" placeholder="@label">
+         @SgFontawesome.AllItems();
+        </select>
+    </div>
+ 
+
+}
+
+@helper ComboBox(String id, String label, Dictionary<String, String> values, String divClass = "")
+{
+    <div class="form-group @divClass">
+        <label class="control-label">@label</label>
+        <select class="form-control select2" id="@id" name="@id" data-placeholder="@label" tabindex="-1" aria-hidden="true">
+            <option></option>                        
+            @if (values != null)
+            {
+                foreach (KeyValuePair<String, String> opt in values)
+                {
+                    <option value="@opt.Key">@opt.Value </option>
+                }
+            }
+        </select>
+    </div>
+}
+
+@functions
+{
+    public static HelperResult ComboBox<T>(String id, String label, String keyField, String valueField, String divClass = "") where T : Devia.Sigma.Db.Entity.SgDbEntity<T>
+    {
+        var list = Devia.Sigma.Db.Entity.SgDbEntity<T>.SelectAll();
+
+        var values = new Dictionary<String, String>();
+        foreach (var item in list)
+        {
+            var key = item.GetType().GetProperty(keyField).GetValue(item).ToString();
+            var value = item.GetType().GetProperty(valueField).GetValue(item).ToString();
+
+            values.Add(key, value);
+        }
+
+        return ComboBox(id, label, values, divClass);
+    }
+}
+
+<!-- 
+TextArea
+RichTextBox    
+Combo with entity    
+Button
+ToggleButton
+Radio
+Switch
+
+Portlet
+Tab Control
+Modal 
+       
+-->
+
+
+
+
+
+
+
+

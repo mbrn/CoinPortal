@@ -1,0 +1,663 @@
+﻿@using Devia.Sigma.Business.Auth.Entity
+@using Devia.Sigma.Business.Parameter.Entity
+@using System.Collections.Specialized
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section pageHeader
+{
+    <link href="~/Theme/Metronic/assets/pages/css/pricing.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic/assets/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css">
+
+    <style>
+        div.pck-cnt-val div h2, div.pck-cnt div h2.pck-cnt-update {
+            font-size: 11pt;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .vakata-context li a {
+            padding: 0px 20px 0px 30px  !important;    
+        }
+    </style>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    @*<i class="fa fa-users font-blue-hoki"></i>*@
+                    <span class="caption-subject bold font-blue-hoki uppercase"> TENANT TİPLERİ </span>
+                </div>
+                <div class="actions">
+                    <a id="btnAddFrmTntTyp" class="btn blue-hoki btn-outline" href="javascript:;" data-original-title="" title=""> <i class="fa fa-plus"></i> Tenant Tipi Ekle </a>
+                </div>
+            </div>
+            <div class="portlet-body form">     
+                <div class="form" id="frmTntTypLst">
+                                    
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row display-hide" id="tntDetailContainer">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title tabbable-line">
+                <div class="caption">
+                    <span class="caption-subject bold font-blue-hoki uppercase"> TENANT ÖZELLİKLERİ </span>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#portlet_tab2_4" data-toggle="tab"> Genel Paketler </a>
+                    </li>
+                    <li>
+                        <a href="#portlet_tab2_3" data-toggle="tab"> Rol - Ekran Tanımları </a>
+                    </li>
+                    <li>
+                        <a href="#portlet_tab2_2" data-toggle="tab"> Seçenekler </a>
+                    </li>
+                    <li>
+                        <a href="#portlet_tab2_1" data-toggle="tab"> Ayar Seçenekleri </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="portlet-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="portlet_tab2_4">
+                        <div class="row pull-left" style="margin-left:5px;">
+                            <button id="btnAddPck" type="button" class="btn btn-sm blue-hoki btn-outline">Yeni Paket Ekle</button>
+                        </div>
+                       
+                        <div class="pricing-content-2">
+                            <div class="pricing-table-container">
+                                <div class="row" id="pckContainer">
+                                    <div class="col-md-2 col-sm-2 package-content" id="pckContent">
+                                        <div class="price-column-container border-left border-top border-right">
+                                            <div class="price-table-head price-1">
+                                                <h2 class="bold font-blue-hoki opt-pricing-5">İçerikler</h2>
+                                            </div>
+                                            <div class="price-table-pricing">
+                                                <p class="uppercase"></p>
+                                            </div>
+                                            <div class="price-table-content">
+                                                @*<div class="row no-margin">
+                                                    <div class="col-xs-3 text-right">
+                                                        <i class="icon-user"></i>
+                                                    </div>
+                                                    <div class="col-xs-9 text-left uppercase">3 Members</div>
+                                                </div>*@                                                
+                                            </div>
+                                            <div class="price-table-footer">
+                                                <div class="input-group" style="margin:10px;">
+                                                    @(Html.Sigma().ComboBox<FrmTntTypCnt>("CntCode", "CntCode", "CntName", "form-control", "", "", false))
+                                                    <span class="input-group-btn">
+                                                        <button id="btnAddFrmTntTypCnt" class="btn blue-hoki btn-outline" type="button"><i class="fa fa-plus"></i></button>
+                                                        @*<a class="btn blue-hoki btn-outline" href="../../Base/FrmTntTypCnt/Index" target="_blank"><i class="fa fa-arrow-right"></i></a>*@
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="portlet_tab2_3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="portlet light bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <span class="caption-subject bold font-blue-hoki uppercase"> ROLLER </span>
+                                        </div>
+                                        <div class="actions">
+                                            <a id="btnAddFrmTntAutRol" class="btn blue-hoki btn-outline" href="javascript:;" data-original-title="" title=""> <i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body" style="padding:0px;">
+                                        <div class="list-group" id="frmFrmTntAutRolList">                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="portlet light bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <span class="caption-subject bold font-blue-hoki uppercase"> EKRANLAR </span>
+                                        </div>
+                                        <div class="actions">
+                                            <a id="btnAddFrmTntAutItmScr" class="btn blue-hoki btn-outline" href="javascript:;" data-original-title="" title=""> <i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div id="screen_tree">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="portlet light bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <span class="caption-subject bold font-blue-hoki uppercase"> ÖZEL YETKİLER </span>
+                                        </div>
+                                        <div class="actions">
+                                            <a id="btnAddFrmTntAutItmCst" class="btn blue-hoki btn-outline" href="javascript:;" data-original-title="" title=""> <i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="list-group" id="frmFrmTntAutItmCstList">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane form" id="portlet_tab2_2">
+                        <form role="form" id="frmFrmTntTypOpt" class="form-horizontal">
+                            <div class="form-body">
+                                @SgHtml.TextBox("Guid", "", "display-hide")
+                                @SgHtml.TextBox("Status", "", "display-hide")
+                                @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                @SgHtml.TextBox("TypCode", "", "display-hide")
+                                
+                                <div class="form-group">
+                                    <label class="col-md-9 control-label" style="text-align:left;">Doğrudan kullanıcı eklenebilsin mi?</label>
+                                    <div class="col-md-3" style="text-align:right;">
+                                        <input id="AddUser" name="AddUser"  type="checkbox" class="form-control make-switch" data-on-text="<span class='fa fa-check'></span>" data-off-text="<span class='fa fa-times'></span>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-9 control-label" style="text-align:left;">Davetiye ile kullanıcı eklenebilsin mi?</label>
+                                    <div class="col-md-3" style="text-align:right;">
+                                        <input id="InviteUser" name="InviteUser" type="checkbox" class="form-control make-switch" data-on-text="<span class='fa fa-check'></span>" data-off-text="<span class='fa fa-times'></span>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-9 control-label" style="text-align:left;">DML işlemlerinde TenantId otomatik eklensin mi?</label>
+                                    <div class="col-md-3" style="text-align:right;">
+                                        <input id="UseTenantIdOnDml" name="UseTenantIdOnDml" type="checkbox" class="form-control make-switch" data-on-text="<span class='fa fa-check'></span>" data-off-text="<span class='fa fa-times'></span>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-9 control-label" style="text-align:left;">Select işlemlerinde TenantId otomatik eklensin mi?</label>
+                                    <div class="col-md-3" style="text-align:right;">
+                                        <input id="UseTenantIdOnSelect" name="UseTenantIdOnSelect" type="checkbox" class="form-control make-switch" data-on-text="<span class='fa fa-check'></span>" data-off-text="<span class='fa fa-times'></span>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-9 control-label" style="text-align:left;">Bir mail adresi yalnızca tek tenant mı açabilsin?</label>
+                                    <div class="col-md-3" style="text-align:right;">
+                                        <input id="IsUniqueMembership" name="IsUniqueMembership" type="checkbox" class="form-control make-switch" data-on-text="<span class='fa fa-check'></span>" data-off-text="<span class='fa fa-times'></span>">
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <div style="text-align:right;">
+                                        <button id="btnSaveFrmTntTypOpt" type="button" class="btn green">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="portlet_tab2_1">
+                        Tenantlar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Package Modals -->
+
+<div id="modalFormFrmTntTyp" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true"></a>
+                <div class="caption">
+                    <span class="caption-subject bold font-blue-hoki uppercase"> TENANT TİPİ </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <form role="form" id="frmFrmTntTyp">
+                                <div class="form-body">
+                                    @SgHtml.TextBox("Guid", "", "display-hide")
+                                    @SgHtml.TextBox("Status", "", "display-hide")
+                                    @SgHtml.TextBox("Lastupdated", "", "display-hide")
+
+                                    @SgHtml.TextBox("TypCode", "Tenant Tip Kodu", "col-md-12", "Tip Kodu", 3)
+                                    @SgHtml.TextBox("TypName", "Tenant Tip Adı", "col-md-12", "Tip Adı", 100)
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="btnFrmTntTypCancel" data-dismiss="modal" class="btn btn-default">İptal</a>
+                <a id="btnFrmTntTypSave" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</a>
+                <a id="btnFrmTntTypUpdate" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalFormFrmTntTypPck" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">FrmTntTypPck</h4>
+            </div>*@
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-body">
+                        <div class="tabbable-line">
+                            <ul class="nav nav-tabs uppercase bold">
+                                <li class="active">
+                                    <a href="#tab1" data-toggle="tab" aria-expanded="false">PAKET BİLGİLERİ</a>
+                                </li>
+                                <li class="">
+                                    <a href="#tab2" data-toggle="tab" aria-expanded="false">ÜRÜN BİLGİLERİ</a>
+                                </li>
+                                <li class="">
+                                    <a href="#tab3" data-toggle="tab" aria-expanded="false">YETKİLER</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab1">
+                                    <form role="form" id="frmFrmTntTypPck">
+                                        <div class="form-body">
+                                            @SgHtml.TextBox("Guid", "", "display-hide")
+                                            @SgHtml.TextBox("Status", "", "display-hide")
+                                            @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                            @SgHtml.TextBox("PckId", "", "display-hide")
+                                            @SgHtml.TextBox("PrdId", "", "display-hide")
+                                            @SgHtml.TextBox("TypCode", "", "display-hide")
+
+
+                                            @SgHtml.TextBox("PckName", "Paket Adı", "col-md-12", "Paket Adı", 100)
+                                            @SgHtml.ComboBox("PckType", "Paket Tipi", new Dictionary<string, string>()
+                                                            {
+                                                                {"S", "Standart" },
+                                                                {"E", "Ek" },
+                                                            }, "col-md-12")
+
+                                            @SgHtml.TextBox("OrderNo", "Sıralama", "col-md-12", "Sıralama", 2, dataType: "numeric")
+                                            @SgHtml.TextBox("HeaderHtmlClass", "Header class", "col-md-12", "Header class", 100)
+                                            @SgHtml.CheckBox("IsActive", "Aktiflik", "col-md-12")
+                                            @SgHtml.CheckBox("IsDefault", "Default", "col-md-12")
+                                            @SgHtml.CheckBox("IsHighlight", "Highlight", "col-md-12")
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <form role="form" id="frmFrmTntTypPckPrd">
+                                        <div class="form-body">
+                                            @SgHtml.TextBox("Guid", "", "display-hide")
+                                            @SgHtml.TextBox("Status", "", "display-hide")
+                                            @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                            @SgHtml.TextBox("PrdId", "", "display-hide")
+                                            @SgHtml.TextBox("PrvId", "", "display-hide")
+                                            @SgHtml.TextBox("CtgId", "", "display-hide")
+                                            @SgHtml.TextBox("BrdId", "", "display-hide")
+                                            @SgHtml.TextBox("StockCode", "", "display-hide")
+                                            @SgHtml.TextBox("Barcod", "", "display-hide")
+                                            @SgHtml.TextBox("LongDscr", "", "display-hide")
+
+                                            @SgHtml.CheckBox("IsActive", "Ürün satışa çıksın?", "col-md-12")
+                                            @SgHtml.TextBox("PrdName", "Ürün Adı", "col-md-12", "Ürün Adı", 100)
+                                            @SgHtml.TextBox("TaxRate", "Vergi Oranı (KDV)", "col-md-12", "Vergi Oranı (KDV)", 2, dataType: "numeric")
+                                            @SgHtml.TextBox("ShortDscr", "Açıklama", "col-md-12", "Açıklama", 1000)
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane" id="tab3">
+                                    <div class="col-md-12">
+                                        <table id="tblFrmAutRol" class="table table-striped table-hover table-bordered dataTable no-footer" cellspacing="0" role="grid" aria-describedby="tblFrmAutRol_info"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnFrmTntTypPckCancel" type="button" data-dismiss="modal" class="btn btn-default">İptal</button>
+                <button id="btnFrmTntTypPckUpdate" type="button" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalFormFrmTntTypPckCnt" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">FrmTntTypPckCnt</h4>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <form role="form" id="frmFrmTntTypPckCnt">
+                                <div class="form-body">
+                                    @SgHtml.TextBox("Guid", "", "display-hide")
+                                    @SgHtml.TextBox("Status", "", "display-hide")
+                                    @SgHtml.TextBox("Lastupdated", "", "display-hide")
+
+                                    @SgHtml.TextBox("PckCntId", "", "display-hide")
+                                    @SgHtml.TextBox("TypCode", "", "display-hide")
+                                    @SgHtml.TextBox("CntCode", "", "display-hide")
+                                    @SgHtml.TextBox("Name", "", "display-hide")
+                                    @SgHtml.CheckBox("IsVisible", "Is Visible", "col-md-12")
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnFrmTntTypPckCntCancel" type="button" data-dismiss="modal" class="btn btn-default">İptal</button>
+                <button id="btnFrmTntTypPckCntUpdate" type="button" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalFormFrmTntTypPckCntVal" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">FrmTntTypPckCntVal</h4>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <form role="form" id="frmFrmTntTypPckCntVal">
+                                <div class="form-body">
+                                    @SgHtml.TextBox("Guid", "", "display-hide")
+                                    @SgHtml.TextBox("Status", "", "display-hide")
+                                    @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                    @SgHtml.TextBox("PckId", "", "display-hide")
+                                    @SgHtml.TextBox("PckCntId", "", "display-hide")
+                                   
+                                    @SgHtml.TextBox("CntVal", "Değer", "col-md-12", "Değer", 100)
+                                    @SgHtml.TextBox("CntViewVal", "Görülen Değer", "col-md-12", "Görülen Değer", 100)
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnFrmTntTypPckCntValCancel" type="button" data-dismiss="modal" class="btn btn-default">İptal</button>
+                <button id="btnFrmTntTypPckCntValUpdate" type="button" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Auth Modals -->
+
+<div id="modalFormFrmTntAutRol" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true"></a>
+                <div class="caption">
+                    <i class="fa fa-tags font-blue-hoki"></i>
+                    <span class="caption-subject bold font-blue-hoki uppercase"> ROL TANIMI </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <form role="form" id="frmFrmTntAutRol">
+                                <div class="form-body">
+                                    @SgHtml.TextBox("Guid", "", "display-hide")
+                                    @SgHtml.TextBox("Status", "", "display-hide")
+                                    @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                    @SgHtml.TextBox("TntType", "", "display-hide")
+                                    @SgHtml.CheckBox("IsDefault", "", "display-hide")
+
+                                    @SgHtml.TextBox("RoleId", "Role No", "col-md-12", "Role No", 30, attribute: "readonly")
+                                    @SgHtml.TextBox("RoleName", "Role Adı", "col-md-12", "Role Adı", 30)
+                                    @SgHtml.TextBox("Dscr", "Açıklama", "col-md-12", "Açıklama", 200)
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a data-dismiss="modal" class="btn btn-default">İptal</a>
+                <a id="btnFrmTntAutRolSave" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</a>
+                <a id="btnFrmTntAutRolUpdate" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalFormFrmTntAutItmScr" class="modal fade bs-modal-lg" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true"></a>
+                <div class="caption">
+                    <i class="fa fa-desktop font-blue-hoki"></i>
+                    <span class="caption-subject bold font-blue-hoki uppercase"> Ekran Tanımı </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <form role="form" id="frmFrmTntAutItmScr">
+                                <div class="form-body">
+                                    @SgHtml.TextBox("Guid", "", "display-hide")
+                                    @SgHtml.TextBox("Status", "", "display-hide")
+                                    @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                    @SgHtml.TextBox("TntType", "", "display-hide")
+                                    @SgHtml.TextBox("Priority", "", "display-hide")
+                                    @SgHtml.CheckBox("IsDefaultStartScreen", "", "display-hide")
+
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Ekran No</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="ItemId" name="ItemId" placeholder="Ekran No" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Menü</label>
+                                        <select class="form-control select2" id="ParentId" name="ParentId" data-placeholder="Menü" tabindex="-1" aria-hidden="true"></select>
+                                    </div>
+
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Menü Tipi</label>
+                                        <select class="form-control select2" id="NodeType" name="NodeType" placeholder="Menü Tipi" required>
+                                            <option value="N">Ekran</option>
+                                            <option value="L">Menü</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Ekran Tipi</label>
+                                        <select class="form-control select2" id="ScrType" name="ScrType" placeholder="Ekran Tipi" required>
+                                            <option value="B">Altyapı ekranı</option>
+                                            <option value="O">Diğer ekran</option>
+                                        </select>
+                                    </div>
+                                    @*<div class="form-group col-md-6 ">
+                                        <label class="control-label">İkon</label>
+                                        <select class="form-control input-block-level select2" id="ItemIconContent" name="ItemIconContent" placeholder="İkon">
+                                            @Html.Partial("../SharedPartials/FontawesomeIconOptionList")
+                                        </select>
+                                    </div>*@
+                                    @SgHtml.FontawesomeCombo("ItemIconContent", "İkon", "col-md-6 ")
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Ekran Adı</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="ItemName" name="ItemName" placeholder="Ekran Adı" maxlength="30">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Area</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="Area" name="Area" placeholder="Area" maxlength="45">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Controller</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="Controller" name="Controller" placeholder="Controller" maxlength="45">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Kanallar</label>
+                                        @(Html.Sigma().ComboBox<FrmPrmChannel>("Channel", "ChannelKey", "ChannelName", "form-control select2-multiple", "multiple=\"\"", "", false))
+                                    </div>
+                                    <div class="form-group col-md-6 ">
+                                        <label class="control-label">Açıklama</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="ItemDscr" name="ItemDscr" placeholder="Açıklama" maxlength="200">
+                                        </div>
+                                    </div>
+                                    @SgHtml.CheckBox("ShowHeader", "Header gösterme", "col-md-6")
+                                    <div class="form-group col-md-6 display-hide">
+                                        <label class="control-label">InsertDatetime</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="InsertDatetime" name="InsertDatetime" placeholder="InsertDatetime" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 display-hide">
+                                        <label class="control-label">InsertUser</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="InsertUser" name="InsertUser" placeholder="InsertUser" maxlength="30">
+                                        </div>
+                                    </div>
+
+                                   
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                </div>
+            </div>
+            <div class="modal-footer">       
+                <a data-dismiss="modal" class="btn btn-default">İptal</a>         
+                <a id="btnFrmTntAutItmScrSave" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</a>
+                <a id="btnFrmTntAutItmScrUpdate" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalFormFrmTntAutItmCst" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true"></a>
+                <div class="caption">
+                    <i class="fa fa-star-half-o font-blue-hoki"></i>
+                    <span class="caption-subject bold font-blue-hoki uppercase"> ÖZEL YETKİ TANIMI </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+                    <div class="scroller" style="overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+                        <div class="row">
+                            <form role="form" id="frmFrmTntAutItmCst">
+                                <div class="form-body">
+                                    @SgHtml.TextBox("Guid", "", "display-hide")
+                                    @SgHtml.TextBox("Status", "", "display-hide")
+                                    @SgHtml.TextBox("Lastupdated", "", "display-hide")
+                                    @SgHtml.TextBox("TntType", "", "display-hide")
+
+                                    <div class="form-group col-md-12 ">
+                                        <label class="control-label">ItemId</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="ItemId" name="ItemId" placeholder="ItemId" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12 ">
+                                        <label class="control-label">ItemName</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="ItemName" name="ItemName" placeholder="ItemName" maxlength="30">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12 ">
+                                        <label class="control-label">ItemDscr</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control" id="ItemDscr" name="ItemDscr" placeholder="ItemDscr" maxlength="200">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a data-dismiss="modal" class="btn btn-default">İptal</a>
+                <a id="btnFrmTntAutItmCstSave" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</a>
+                <a id="btnFrmTntAutItmCstUpdate" class="btn blue-madison">@Html.Sigma().Icon("f021") Güncelle</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pageScript
+{
+    <script src="~/Theme/Metronic/assets/global/plugins/jstree/dist/jstree.min.js" type="text/javascript"></script>    
+    <script src="~/Scripts/cinema.min.js"></script>
+    <script src="~/Scripts/jquery-watch.min.js"></script>
+    <script src="~/Areas/Base/Scripts/Auth/Tenancy/Tenancy.js"></script>
+}
+
+

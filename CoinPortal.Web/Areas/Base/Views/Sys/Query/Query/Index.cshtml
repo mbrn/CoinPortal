@@ -1,0 +1,122 @@
+﻿@using Devia.Sigma.Core.Configuration.Custom.Db
+@using Devia.Sigma.Core.Configuration.Custom
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Base/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+@section pageHeader
+{
+    <link href="~/Theme/Metronic/assets/global/plugins/codemirror/lib/codemirror.css" rel="stylesheet" />
+<link href="~/Theme/Metronic/assets/global/plugins/codemirror/addon/hint/show-hint.css" rel="stylesheet" />
+    <style>
+        .twitter-typeahead, .tt-hint, .tt-input, .tt-menu { width: 100%; }
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-menu {    /* used to be tt-dropdown-menu in older versions */
+  width: 100%;
+  margin-top:2px;
+  padding: 4px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor,.tt-suggestion:hover {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <a id="btnFrmSysQrySave" class="btn blue-madison">@Html.Sigma().Icon("f0c7") Kaydet</a>
+                    <a id="btnFrmSysQryDelete" class="btn red-sunglo">@Html.Sigma().Icon("f00d") Sil</a>
+                    <a id="btnFrmSysQryClear" class="btn btn-default">@Html.Sigma().Icon("f1f8") Temizle</a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="frmFrmSysQry">
+                    <div class="form-body">
+                        <div class="form-group col-md-4 ">
+                            <label class="control-label">Sorgu Adı</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="QryName" name="QryName" style='text-transform:uppercase' maxlength="250">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">VeriTabanı</label>
+                            <select id="DbName" name="DbName" class="form-control select2">
+                                @foreach (SgDbConfig conn in SgConfig.Instance.DbConnections)
+                                {
+                                    <option value="@conn.DbName">@conn.DbName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4 ">
+                            <label class="control-label">Açıklama Adı</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control" id="Description" name="Description"  maxlength="250">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Sorgu Açıklaması</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <textarea type="text" class="form-control" id="QryTxt" name="QryTxt" placeholder="QryTxt"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+
+@section pageScript
+{
+<script src="~/Theme/Metronic/assets/global/plugins/codemirror/lib/codemirror.js"></script>
+<script src="~/Theme/Metronic/assets/global/plugins/codemirror/mode/sql/sql.js"></script>
+<script src="~/Theme/Metronic/assets/global/plugins/codemirror/addon/hint/show-hint.js"></script>
+<script src="~/Theme/Metronic/assets/global/plugins/codemirror/addon/hint/anyword-hint.js"></script>
+<script src="~/Theme/Metronic/assets/global/plugins/codemirror/addon/hint/sql-hint.js"></script>
+
+<script src="~/Areas/Base/Scripts/Sys/Query/Query.js"></script>
+}
+
+
+
+

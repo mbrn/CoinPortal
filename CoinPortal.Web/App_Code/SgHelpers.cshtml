@@ -1,0 +1,70 @@
+﻿
+<!-- BEGIN : LOGIN PAGE HELPERS -->
+@helper TitleLogin()
+{
+    <title>Login Sigma Framework</title>    
+}
+
+@helper FavIcon()
+{
+    <link rel="shortcut icon" href="http://www.scootermediaco.com/wp-content/uploads/2013/06/Favicon-Scooter-Media.jpg" />
+}
+
+
+@helper LogoLogin()
+{
+    <img src="~/Theme/Sigma/img/logo-white.png" alt="" />
+}
+<!-- END : LOGIN PAGE HELPERS -->
+
+
+<!-- BEGIN : SETPASSWORD PAGE HELPERS -->
+@helper TitleSetPassword()
+{
+    <title>Set Password</title>
+}
+
+@helper LogoSetPassword()
+{
+    <img src="~/Theme/Sigma/img/logo-white.png" alt="" />
+}
+<!-- END : SETPASSWORD PAGE HELPERS -->
+
+
+<!-- BEGIN : ANY PAGE HELPERS -->
+@helper TitlePage(String pageName)
+{
+    if (String.IsNullOrEmpty(pageName))
+    {
+        <title>Sigma</title>
+    }
+    else
+    {
+        <title>Sigma - @pageName</title>
+    }
+}
+
+@helper LogoPage()
+{
+    <img src="~/Theme/Sigma/img/logo-white.png" alt="logo" class="logo-default" width="170"/>
+}
+
+@helper DropdownMenu()
+{
+    <li>
+        <a href="~/Base/MyProfile/Index">
+            <i class="fa fa-user"></i> Hesabım
+        </a>
+    </li>
+    <li>
+        <a href="../../Base/Login/Logout">
+            <i class="fa fa-sign-out"></i> Çıkış
+        </a>
+    </li>
+}
+
+
+<!-- END : ANY PAGE HELPERS -->
+
+
+
