@@ -16,8 +16,8 @@ namespace CoinPortal.Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
-            ).DataTokens.Add("area", "Base");
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            ).DataTokens.Add("area", "Site");
         }
     }
 }

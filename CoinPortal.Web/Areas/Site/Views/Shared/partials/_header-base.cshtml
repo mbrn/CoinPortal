@@ -1,0 +1,20 @@
+<!-- begin::Header -->
+<header class="m-grid__item		m-header "  data-minimize="minimize" data-minimize-offset="200" data-minimize-mobile-offset="200" >
+	<div class="m-header__top">
+		<div class="m-container m-container--fluid m-container--full-height m-page__container">
+			<div class="m-stack m-stack--ver m-stack--desktop">
+                @Html.Partial("~/Areas/Site/Views/Shared/partials/_header-brand.cshtml")
+                @Html.Partial("~/Areas/Site/Views/Shared/partials/_header-topbar.cshtml")
+			</div>
+		</div>
+	</div>
+	<div class="m-header__bottom">
+		<div class="m-container m-container--fluid m-container--full-height m-page__container">
+			<div class="m-stack m-stack--ver m-stack--desktop">
+                @Html.Partial("~/Areas/Site/Views/Shared/partials/_header-hor-menu.cshtml")
+                @Html.Partial("~/Areas/Site/Views/Shared/partials/_header-search.cshtml")
+			</div>
+		</div>
+	</div>
+</header>
+<!-- end::Header -->

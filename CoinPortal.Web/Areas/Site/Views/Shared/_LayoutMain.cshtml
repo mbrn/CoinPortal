@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<!-- Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 4Author: KeenThemesWebsite: http://www.keenthemes.com/Contact: support@keenthemes.comFollow: www.twitter.com/keenthemesDribbble: www.dribbble.com/keenthemesLike: www.facebook.com/keenthemesPurchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemesRenew Support: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemesLicense: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.-->
+<html lang="en">
+<!-- begin::Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Metronic | Dashboard
+    </title>
+    <meta name="description" content="Latest updates and statistic charts">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--begin::Web font -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({ google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] }, active: function () { sessionStorage.fonts = true; } });
+    </script>
+    <!--end::Web font -->        <!--begin::Base Styles -->                           <!--begin::Page Vendors -->
+    <link href="~/Theme/Metronic5/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Page Vendors -->
+    <link href="~/Theme/Metronic5/assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/Metronic5/assets/demo/demo5/base/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Base Styles -->
+    <link rel="shortcut icon" href="assets/demo/demo5/media/img/logo/favicon.ico" />
+</head>
+<!-- end::Head -->        <!-- end::Body -->
+<body class="m-page--fluid m-page--loading m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default">    
+    @Html.Partial("~/Areas/Site/Views/Shared/partials/_loader-base.cshtml")
+
+    <!-- begin:: Page -->
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        @Html.Partial("~/Areas/Site/Views/Shared/partials/_header-base.cshtml")
+        <!-- begin::Body -->
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body m-page__container">
+            <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                @Html.Partial("~/Areas/Site/Views/Shared/partials/_subheader-default.cshtml")
+                <div class="m-content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <!-- end::Body -->
+        @Html.Partial("~/Areas/Site/Views/Shared/partials/_footer-default.cshtml")
+    </div>
+    <!-- end:: Page -->
+    @Html.Partial("~/Areas/Site/Views/Shared/partials/_layout-quick-sidebar.cshtml")
+    @Html.Partial("~/Areas/Site/Views/Shared/partials/_layout-scroll-top.cshtml")
+    <!--begin::Base Scripts -->
+    <script src="~/Theme/Metronic5/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+    <script src="~/Theme/Metronic5/assets/demo/demo5/base/scripts.bundle.js" type="text/javascript"></script>
+    <!--end::Base Scripts -->                    <!--begin::Page Vendors -->
+    <script src="~/Theme/Metronic5/assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
+    <!--end::Page Vendors -->                                                        <!--begin::Page Snippets -->
+    <script src="~/Theme/Metronic5/assets/app/js/dashboard.js" type="text/javascript"></script>
+    <!--end::Page Snippets -->                                    <!-- begin::Page Loader -->
+    <script>
+        $(window).on('load', function () { $('body').removeClass('m-page--loading'); });
+    </script>
+    <!-- end::Page Loader -->
+</body>
+<!-- end::Body -->
+</html>

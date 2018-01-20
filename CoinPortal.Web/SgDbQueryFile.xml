@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<QueryList>
+  <Query name="GET_FRM_MON_ACT_CHART_DATA_AVG">
+    select mod(truncate(lastupdated/1000000, 0), 100), is_ajax,count(*), truncate(avg(total_cost), 0)
+    from sg_frm.frm_mon_act act
+    where act.status = 1
+    (PRM_OPTIONAL P_LASTUPDATED) AND LASTUPDATED &gt;= @P_LASTUPDATED (/)
+    (PRM_OPTIONAL P_USERNAME) AND USERNAME = @P_USERNAME (/)
+    (PRM_OPTIONAL P_SCREEN_ITEM_ID) AND SCREEN_ITEM_ID = @P_SCREEN_ITEM_ID (/)
+    (PRM_OPTIONAL P_TNT_TYPE) AND TNT_TYPE = @P_TNT_TYPE (/)
+    (PRM_OPTIONAL P_TNT_ID) AND TNT_ID = @P_TNT_ID (/)
+    group by mod(truncate(lastupdated/1000000, 0), 100), is_ajax
+  </Query>
+  <Query name="GET_FRM_MON_ACT_CHART_DATA_CNT">
+    select mod(truncate(lastupdated/1000000, 0), 100),  SUBSTRING(log_status, 2, 1), count(*)
+    from sg_frm.frm_mon_act act
+    where act.status = 1
+    and log_status in ('RF', 'RE', 'AE')
+    (PRM_OPTIONAL P_LASTUPDATED) AND LASTUPDATED &gt;= @P_LASTUPDATED (/)
+    (PRM_OPTIONAL P_USERNAME) AND USERNAME = @P_USERNAME (/)
+    (PRM_OPTIONAL P_SCREEN_ITEM_ID) AND SCREEN_ITEM_ID = @P_SCREEN_ITEM_ID (/)
+    (PRM_OPTIONAL P_TNT_TYPE) AND TNT_TYPE = @P_TNT_TYPE (/)
+    (PRM_OPTIONAL P_TNT_ID) AND TNT_ID = @P_TNT_ID (/)
+    group by mod(truncate(lastupdated/1000000, 0), 100), SUBSTRING(log_status, 2, 1);
+  </Query>
+  <Query name="GET_FRM_COM_EML_WAITING">
+    select eml_id
+    from sg_frm.frm_com_eml eml
+    where eml.status = 1
+    and eml.mail_status = 'W'
+    and eml.wait_datetime &lt;= DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+    limit 1
+  </Query>
+  <Query name="GET_USRS">
+    SELECT usr.guid, usr.status, usr.lastupdated,
+    usr.usr_id, usr.username, '',usr.aut_type,
+    usr.mail, usr.name, usr.surname,
+    usr.display_name, usr.cell_phone, usr.verification_code,
+    usr.img_id, doc.full_file_name, tnt.is_active,
+    tnt.is_tenant_owner,usr.is_approved, usr.last_login_date,
+    (select group_concat(role_id) from sg_frm.frm_tnt_aut_usr_rol where status = 1  and tnt_id = @P_TNT_ID and usr_id = usr.usr_id) as roles
+    FROM sg_frm.frm_tnt_aut_usr_tnt tnt,
+    sg_frm.frm_tnt_aut_usr usr
+    left outer join sg_frm.frm_doc doc on doc.status = 1 and doc.doc_id = usr.img_id
+    WHERE usr.status = 1
+    and tnt.status = 1
+    and tnt.usr_id = usr.usr_id
+    and tnt.tnt_id = @P_TNT_ID
+    (PRM_OPTIONAL P_IS_ACTIVE) AND tnt.is_active = @P_IS_ACTIVE (/)
+    union
+    select 0, 0, 0,
+    0, inv.mail, '','',
+    inv.mail, '', '',
+    '', '', '',
+    0, '', 0,
+    0,0, 0, ''
+    from sg_frm.frm_tnt_aut_usr_tnt_inv inv
+    where inv.status = 1
+    and is_confirmed = 0
+    and is_cancelled = 0
+    and inv.tnt_id = @P_TNT_ID
+  </Query>
+
+  <Query name="GET_USAGE_GUIDE_SUBJECTS">
+    SELECT SUBJECT_ID, PARENT_ID,NODE_TYPE,SUBJECT_NAME,SUBJECT_ICON_CONTENT,PRIORITY FROM sg_frm.frm_usg_sbj where status = 1
+  </Query>
+</QueryList>

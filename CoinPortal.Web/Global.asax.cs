@@ -19,7 +19,10 @@ namespace CoinPortal.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new SgViewEngine());
+            var engine = new SgViewEngine();
+            engine.RegisterArea("CoinPortal.Web.Areas.Admin.Controllers", "~/Areas/Admin/Views");
+            engine.RegisterArea("CoinPortal.Web.Areas.Site.Controllers", "~/Areas/Site/Views");
+            ViewEngines.Engines.Add(engine);            
 
             SgWorker.Fire(() =>
             {
