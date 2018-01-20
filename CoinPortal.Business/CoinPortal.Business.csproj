@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Devia.Sigma.Core">
+      <HintPath>..\Sigma\Dlls\Devia.Sigma.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Devia.Sigma.Db">
+      <HintPath>..\Sigma\Dlls\Devia.Sigma.Db.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,7 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Crr.cs" />
+    <Compile Include="Entity\CrrExc.cs" />
+    <Compile Include="Entity\CrrMrk.cs" />
+    <Compile Include="Entity\CrrMrkExc.cs" />
+    <Compile Include="Entity\CrrTyp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
