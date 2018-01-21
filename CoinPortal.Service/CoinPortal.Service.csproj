@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MarketData\Collectors\Binance\BinanceDataPicker.cs" />
     <Compile Include="MarketData\Collectors\Bitfinex\BitfinexDataPicker.cs" />
     <Compile Include="MarketData\IMarketPicker.cs" />
     <Compile Include="MarketData\MarketPickerThreadPool.cs" />
