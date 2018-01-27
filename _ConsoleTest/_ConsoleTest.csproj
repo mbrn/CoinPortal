@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F70570AF-F5B9-4190-8034-A59AB1E65005}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CoinPortal.Business</RootNamespace>
-    <AssemblyName>CoinPortal.Business</AssemblyName>
+    <ProjectGuid>{F4D414B7-3681-4527-88EB-115A83C6BDBC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>_ConsoleTest</RootNamespace>
+    <AssemblyName>_ConsoleTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,12 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devia.Sigma.Core">
-      <HintPath>..\Sigma\Dlls\Devia.Sigma.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Devia.Sigma.Db">
-      <HintPath>..\Sigma\Dlls\Devia.Sigma.Db.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Sigma\Dlls\Newtonsoft.Json.dll</HintPath>
@@ -50,17 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoinMarketCap\CoinMarketCapData.cs" />
-    <Compile Include="CoinMarketCap\CoinMarketCapDecimalConverter.cs" />
-    <Compile Include="CoinMarketCap\GlobalData.cs" />
-    <Compile Include="CoinMarketCap\Ticker.cs" />
-    <Compile Include="Entity\Crr.cs" />
-    <Compile Include="Entity\CrrExc.cs" />
-    <Compile Include="Entity\CrrMrk.cs" />
-    <Compile Include="Entity\CrrMrkExc.cs" />
-    <Compile Include="Entity\CrrTyp.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoinPortal.Business\CoinPortal.Business.csproj">
+      <Project>{f70570af-f5b9-4190-8034-a59ab1e65005}</Project>
+      <Name>CoinPortal.Business</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

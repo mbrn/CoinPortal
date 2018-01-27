@@ -22,6 +22,7 @@
     <link href="~/Theme/Metronic5/assets/demo/demo5/base/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Base Styles -->
     <link rel="shortcut icon" href="assets/demo/demo5/media/img/logo/favicon.ico" />
+    <link href="~/Theme/CoinPortal/css/all_views_market-cap-by-circulating-supply_0.css" rel="stylesheet" />
 </head>
 <!-- end::Head -->        <!-- end::Body -->
 <body class="m-page--fluid m-page--loading m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default"
@@ -32,11 +33,13 @@
     <div class="m-grid m-grid--hor m-grid--root m-page">
         @Html.Partial("~/Areas/Site/Views/Shared/partials/_header-base.cshtml")
         <!-- begin::Body -->
-        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body m-page__container">
-            <div class="m-grid__item m-grid__item--fluid m-wrapper">
-                @Html.Partial("~/Areas/Site/Views/Shared/partials/_subheader-default.cshtml")
-                <div class="m-content">
-                    @RenderBody()
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor-desktop m-grid--desktop m-body">
+            <div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver m-container m-container--responsive m-page__container">
+                <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                    @*@Html.Partial("~/Areas/Site/Views/Shared/partials/_subheader-default.cshtml")*@
+                    <div class="m-content">
+                        @RenderBody()
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,11 +56,18 @@
     <script src="~/Theme/Metronic5/assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
     <!--end::Page Vendors -->                                                        <!--begin::Page Snippets -->
     <script src="~/Theme/Metronic5/assets/app/js/dashboard.js" type="text/javascript"></script>
-    <!--end::Page Snippets -->                                    <!-- begin::Page Loader -->
+    <!--end::Page Snippets -->                                    
+    <!-- begin::Page Loader -->
     <script>
         $(window).on('load', function () { $('body').removeClass('m-page--loading'); });
     </script>
     <!-- end::Page Loader -->
+
+    <!-- begin::mbrn scripts -->
+    <script src="~/Areas/Site/Scripts/Util.js"></script>
+    @RenderSection("pageScript", false)
+    
+    <!-- end::mbrn scripts -->                             
 </body>
 <!-- end::Body -->
 </html>

@@ -1,4 +1,5 @@
-﻿using Devia.Sigma.Core.Threading;
+﻿using CoinPortal.Business.CoinMarketCap;
+using Devia.Sigma.Core.Threading;
 using Devia.Sigma.Db.Entity;
 using Devia.Sigma.Web.Mvc;
 using System;
@@ -33,6 +34,8 @@ namespace CoinPortal.Web
             //SgSmsManager.StartPool(1);
 
             Application["OnlineCounter"] = 0;
+
+            CoinMarketCapData.StartWorkers();
         }
 
         void Session_Start(object sender, EventArgs e)

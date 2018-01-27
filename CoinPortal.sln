@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinPortal.Web", "CoinPorta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinPortal.Service", "CoinPortal.Service\CoinPortal.Service.csproj", "{6DB34360-4DE5-43B7-B4C9-19B08E21D284}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_ConsoleTest", "_ConsoleTest\_ConsoleTest.csproj", "{F4D414B7-3681-4527-88EB-115A83C6BDBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6DB34360-4DE5-43B7-B4C9-19B08E21D284}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DB34360-4DE5-43B7-B4C9-19B08E21D284}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DB34360-4DE5-43B7-B4C9-19B08E21D284}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4D414B7-3681-4527-88EB-115A83C6BDBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D414B7-3681-4527-88EB-115A83C6BDBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D414B7-3681-4527-88EB-115A83C6BDBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D414B7-3681-4527-88EB-115A83C6BDBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -168,6 +168,8 @@
     <Content Include="Areas\Base\Scripts\Sys\Provider\FrmPrvAcc.js" />
     <Content Include="Areas\Base\Scripts\Sys\Provider\FrmPrvTyp.js" />
     <Content Include="Areas\Base\Scripts\Sys\Query\Query.js" />
+    <Content Include="Areas\Site\Scripts\Main\Home.js" />
+    <Content Include="Areas\Site\Scripts\Util.js" />
     <Content Include="Global.asax" />
     <Content Include="Library\json-view\jquery.json-view.css" />
     <Content Include="Library\json-view\jquery.json-view.js" />
@@ -178,6 +180,8 @@
     <Content Include="Library\vis\vis.css" />
     <Content Include="Library\vis\vis.js" />
     <Content Include="SgDbQueryFile.xml" />
+    <Content Include="Theme\CoinPortal\css\all_views_market-cap-by-circulating-supply_0.css" />
+    <Content Include="Theme\CoinPortal\img\all_views_market-cap-by-circulating-supply_0.png" />
     <Content Include="Theme\Metronic5\assets\app\js\dashboard.js" />
     <Content Include="Theme\Metronic5\assets\app\js\layout-builder.js" />
     <Content Include="Theme\Metronic5\assets\app\media\img\bg\bg-1.jpg" />
@@ -6192,6 +6196,12 @@
     <Folder Include="Areas\Site\Models\" />
     <Folder Include="Theme\Metronic\assets\apps\img\" />
     <Folder Include="Theme\Metronic\assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoinPortal.Business\CoinPortal.Business.csproj">
+      <Project>{f70570af-f5b9-4190-8034-a59ab1e65005}</Project>
+      <Name>CoinPortal.Business</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

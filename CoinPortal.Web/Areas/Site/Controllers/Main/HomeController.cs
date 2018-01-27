@@ -1,4 +1,5 @@
-﻿using Devia.Sigma.Web.Mvc;
+﻿using CoinPortal.Business.CoinMarketCap;
+using Devia.Sigma.Web.Mvc;
 using Devia.Sigma.Web.MvcAttribute;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,16 @@ namespace CoinPortal.Web.Areas.Site.Controllers.Main
         public ActionResult Index()
         {
             return View();
+        }
+
+        public JsonResult GetGlobalData()
+        {
+            return Json(CoinMarketCapData.GlobalData, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTickerList()
+        {
+            return Json(CoinMarketCapData.TickerList, JsonRequestBehavior.AllowGet);
         }
     }
 }
