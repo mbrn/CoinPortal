@@ -168,11 +168,13 @@
     <Content Include="Areas\Base\Scripts\Sys\Provider\FrmPrvAcc.js" />
     <Content Include="Areas\Base\Scripts\Sys\Provider\FrmPrvTyp.js" />
     <Content Include="Areas\Base\Scripts\Sys\Query\Query.js" />
+    <Content Include="Areas\Site\Scripts\General\Donation.js" />
     <Content Include="Areas\Site\Scripts\Main\Home.js" />
     <Content Include="Areas\Site\Scripts\Util.js" />
     <Content Include="Global.asax" />
     <Content Include="Library\json-view\jquery.json-view.css" />
     <Content Include="Library\json-view\jquery.json-view.js" />
+    <Content Include="Library\qrcodejs\qrcode.min.js" />
     <Content Include="Library\ratestar\star-rating.min.css" />
     <Content Include="Library\ratestar\star-rating.min.js" />
     <Content Include="Library\ratestar\star-rating_locale_tr.js" />

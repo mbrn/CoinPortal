@@ -4,7 +4,7 @@ using Devia.Sigma.Db.Entity.Field;
 using Devia.Sigma.Db.Enumeration;
 using System;
 
-namespace CoinPortal.Business.Entity
+namespace CoinPortal.Business.Entity.SgCrr
 {
     [SgDbEntityObjectAttribute("", "sg_crr", "crr_mrk", true)]
     public partial class CrrMrk : SgDbEntity<CrrMrk>

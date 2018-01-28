@@ -54,11 +54,12 @@
     <Compile Include="CoinMarketCap\CoinMarketCapDecimalConverter.cs" />
     <Compile Include="CoinMarketCap\GlobalData.cs" />
     <Compile Include="CoinMarketCap\Ticker.cs" />
-    <Compile Include="Entity\Crr.cs" />
-    <Compile Include="Entity\CrrExc.cs" />
-    <Compile Include="Entity\CrrMrk.cs" />
-    <Compile Include="Entity\CrrMrkExc.cs" />
-    <Compile Include="Entity\CrrTyp.cs" />
+    <Compile Include="Entity\SgCrr\Crr.cs" />
+    <Compile Include="Entity\SgCrr\CrrExc.cs" />
+    <Compile Include="Entity\SgCrr\CrrMrk.cs" />
+    <Compile Include="Entity\SgCrr\CrrMrkExc.cs" />
+    <Compile Include="Entity\SgCrr\CrrTyp.cs" />
+    <Compile Include="Entity\SgSit\SitDntAdr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
