@@ -20,32 +20,48 @@ namespace CoinPortal.Business.CoinMarketCap
         {
             SgWorker.Cron(() =>
             {
-                GlobalData = TakeGlobalData();
+                GlobalData = TakeGlobalData()??GlobalData;
             }, TimeSpan.FromSeconds(10));
 
             SgWorker.Cron(() =>
             {
-                TickerList = TakeTickers();
+                TickerList = TakeTickers()??TickerList;
             }, TimeSpan.FromSeconds(30));
         }
 
         private static GlobalData TakeGlobalData()
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                var strData = client.DownloadString("https://api.coinmarketcap.com/v1/global/");
-                var result = SgSerializer.Deserialize<GlobalData>(strData);
-                return result;
+                using (WebClient client = new WebClient())
+                {
+                    var strData = client.DownloadString("https://api.coinmarketcap.com/v1/global/");
+                    var result = SgSerializer.Deserialize<GlobalData>(strData);
+                    return result;
+                }
+            }
+            catch(Exception ex)
+            {
+                ex.SgLogError();
+                return null;
             }
         }
 
         private static IList<Ticker> TakeTickers()
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                var strData = client.DownloadString("https://api.coinmarketcap.com/v1/ticker/");
-                var result = SgSerializer.Deserialize<IList<Ticker>>(strData);
-                return result;
+                using (WebClient client = new WebClient())
+                {
+                    var strData = client.DownloadString("https://api.coinmarketcap.com/v1/ticker/");
+                    var result = SgSerializer.Deserialize<IList<Ticker>>(strData);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.SgLogError();
+                return null;
             }
         }
     }

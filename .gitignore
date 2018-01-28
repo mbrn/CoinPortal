@@ -1,5 +1,8 @@
 ## by mbrn
 web.config
+Web.debub.config
+web.release.config
+CustomProfile.pubxml
 app.config
 
 ## Ignore Visual Studio temporary files, build results, and

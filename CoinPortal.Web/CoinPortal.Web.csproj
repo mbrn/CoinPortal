@@ -6164,6 +6164,7 @@
     <Content Include="Theme\Metronic5\assets\vendors\base\fonts\summernote\summernote.eot" />
     <Content Include="Theme\Metronic5\assets\vendors\base\fonts\summernote\summernote.ttf" />
     <Content Include="Theme\Metronic5\assets\vendors\base\fonts\summernote\summernote.woff" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
