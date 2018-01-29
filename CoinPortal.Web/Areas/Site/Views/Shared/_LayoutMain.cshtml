@@ -68,7 +68,26 @@
     <script src="~/Areas/Site/Scripts/Util.js"></script>
     <script src="~/Areas/Site/Scripts/General/Donation.js"></script>
     @RenderSection("pageScript", false)
-    
+
+    @if (Session["BetaWarning"] == null)
+    {
+        { 
+            Session.Add("BetaWarning", new Object());
+        }        
+
+        <script>
+            jQuery(document).ready(function () {
+                //swal("UYARI", "Sitemiz henüz yeni yayınlandı ve beta sürecindeyiz. Dolayısıyla sitemizde bazı hatalar bulunabilir ve verilerin doğruluğu kesin değildir.", "warning");
+                swal({
+                    title: "UYARI",
+                    type: 'warning',
+                    confirmButtonText: 'Tamam',
+                    html: 'Sitemiz <b>beta</b> sürecindedir. Dolayısıyla sitemizde bazı hatalar bulunabilir ve verilerin doğruluğu kesin değildir'
+                })
+            });
+        </script>
+    }
+
     <!-- end::mbrn scripts -->             
 </body>
 <!-- end::Body -->

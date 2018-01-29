@@ -5795,6 +5795,7 @@
     <Content Include="Areas\Site\Views\Shared\partials\_topbar-notifications.cshtml" />
     <Content Include="Areas\Site\Views\Shared\partials\_topbar-quick-actions.cshtml" />
     <Content Include="Areas\Site\Views\Shared\partials\_topbar-user-profile.cshtml" />
+    <Content Include="Areas\Site\Views\Main\Home\NotReady.cshtml" />
     <None Include="packages.config" />
     <Content Include="Theme\Metronic\assets\global\img\social\Thumbs.db" />
     <Content Include="Theme\Metronic\assets\global\plugins\amcharts\amcharts\plugins\dataloader\examples\data\gauge.json" />

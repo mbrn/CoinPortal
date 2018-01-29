@@ -18,6 +18,12 @@ namespace CoinPortal.Web.Areas.Site.Controllers.Main
             return View();
         }
 
+        // GET: Site/Home
+        public ActionResult NotReady()
+        {
+            return View();
+        }
+
         public JsonResult GetGlobalData()
         {
             return Json(CoinMarketCapData.GlobalData, JsonRequestBehavior.AllowGet);

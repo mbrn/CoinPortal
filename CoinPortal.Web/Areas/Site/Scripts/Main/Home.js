@@ -56,7 +56,7 @@
             columns: [
                 { field: 'Rank', title: "#", width: 40 },
                 {
-                    field: 'Name', title: "Name", template: function (row) {
+                    field: 'Name', title: "Sanal Para", template: function (row) {
                         //return '<span><div class="s-s-' + row.Id + ' currency-logo-sprite"></div>' +
                         //    row.Name + '</span>';
 
@@ -68,15 +68,37 @@
 							</div>';
                     }
                 },
-                { field: 'Symbol', title: "Symbol" },
+                { field: 'Symbol', title: "Kod" },
                 { field: 'PriceUsd', title: "USD" },
                 { field: 'PriceBtc', title: "BTC" },
-                { field: 'MarketCapUsd', title: "Market Cap", template: function (row) { return Util.toDollarFormat(row.MarketCapUsd); } },
-                { field: 'Volume24HUsd', title: "Volume 24H", template: function (row) { return Util.toDollarFormat(row.Volume24HUsd); } },
-                { field: 'PercentChange1H', title: "Change 1H", template: function (row) { return percentage(row.PercentChange1H); } },
-                { field: 'PercentChange24H', title: "Change 24H", template: function (row) { return percentage(row.PercentChange24H); } },
-                { field: 'PercentChange7D', title: "Change 7D", template: function (row) { return percentage(row.PercentChange7D); } },        
-            ]
+                { field: 'MarketCapUsd', title: "Market Hacmi", template: function (row) { return Util.toDollarFormat(row.MarketCapUsd); } },
+                { field: 'Volume24HUsd', title: "24S Hacim", template: function (row) { return Util.toDollarFormat(row.Volume24HUsd); } },
+                { field: 'PercentChange1H', title: "1S Değişim", template: function (row) { return percentage(row.PercentChange1H); } },
+                { field: 'PercentChange24H', title: "24S Değişim", template: function (row) { return percentage(row.PercentChange24H); } },
+                { field: 'PercentChange7D', title: "7G Değişim", template: function (row) { return percentage(row.PercentChange7D); } },        
+            ],
+            translate: {
+                records: {
+                    processing: 'Yükleniyor..',
+                    noRecords: 'Kayıt bulunamadı'
+                },
+                toolbar: {
+                    pagination: {
+                        items: {
+                            default: {
+                                first: 'İlk',
+                                prev: 'Önceki',
+                                next: 'Sonraki',
+                                last: 'Son',
+                                more: 'Daha',
+                                input: 'Sayfa No',
+                                select: 'Seç'
+                            },
+                            info: 'Toplam {{total}} kaydın {{start}} - {{end}} tanesi gösteriliyor'
+                        }
+                    }
+                }
+            }
         }).on('m-datatable--on-reloaded', function (e) {
             var data = $('#allCoinsTable').mDatatable().originalDataSet;
             if (data) {
