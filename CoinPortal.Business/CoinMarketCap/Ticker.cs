@@ -33,7 +33,8 @@ namespace CoinPortal.Business.CoinMarketCap
         [JsonConverter(typeof(CoinMarketCapDecimalConverter))]
         public Decimal Volume24HUsd { get; set; }
 
-        [JsonProperty("market_cap_usd")]        
+        [JsonProperty("market_cap_usd")]
+        [JsonConverter(typeof(CoinMarketCapDecimalConverter))]
         public Decimal MarketCapUsd { get; set; }
 
         [JsonProperty("available_supply")]

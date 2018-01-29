@@ -11,6 +11,7 @@ namespace _ConsoleTest
     {
         static void Main(string[] args)
         {
+            //var tickers = CoinMarketCapData.TakeTickers();
         }
     }
 }
