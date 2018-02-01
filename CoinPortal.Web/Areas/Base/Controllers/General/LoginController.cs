@@ -111,7 +111,14 @@ namespace Devia.Sigma.Web.Template.Areas.Base.Controllers.General
                     url = @"~\{0}\{1}\Index".SgFormat(screen.Area, screen.Controller);
                 }
 
-                return Redirect(url);
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Redirect(url);
+                }
             }
             else
             {
@@ -127,7 +134,15 @@ namespace Devia.Sigma.Web.Template.Areas.Base.Controllers.General
                         Session[KEY_SHOW_CAPTCHA] = true;
                     }
                 }
-                return RedirectToAction("Index", new { loginError = true });
+
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(new { result = false, showCaptcha = Session[KEY_SHOW_CAPTCHA] }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { loginError = true });
+                }
             }
         }
 
